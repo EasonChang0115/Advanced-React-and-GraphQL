@@ -1,10 +1,11 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import Header from '../components/Header';
 
 class Pages extends Component {
   render() {
     return (
       <div>
-        <p>Hey! I'm the page component</p>
+        <Header></Header>
         {this.props.children}
       </div>
     )

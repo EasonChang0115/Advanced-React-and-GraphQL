@@ -6,7 +6,6 @@ class MyApp extends App {
 		const { Component } = this.props;
 		return (
 			<container>
-				<p>我是layout 任何page都會套用</p>
 				<Pages>
 					<Component />
 				</Pages>
