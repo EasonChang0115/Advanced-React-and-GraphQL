@@ -5,11 +5,11 @@ class MyApp extends App {
 	render() {
 		const { Component } = this.props;
 		return (
-			<container>
+			<Container>
 				<Pages>
 					<Component />
 				</Pages>
-			</container>
+			</Container>
 		);
 	}
 }

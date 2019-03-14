@@ -5,7 +5,10 @@ import styled from 'styled-components';
 
 const MyButton = styled.button`
   background-color: red;
-  font-size: 100px;
+  font-size: ${props => props.huge ? '100px' : '20px'};
+  .poop {
+    font-size: 25px;
+  }
 `;
 
 class Pages extends Component {
@@ -14,7 +17,8 @@ class Pages extends Component {
       <div>
         <Meta></Meta>
         <Header></Header>
-        <MyButton>按我</MyButton>
+        <MyButton huge>click me!<span className="poop">💩</span></MyButton>
+        <MyButton>click me!<span className="poop">💩</span></MyButton>
         {this.props.children}
       </div>
     )
