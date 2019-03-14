@@ -1,4 +1,5 @@
 import App, { Container } from 'next/app';
+import Pages from '../components/Pages';
 
 class MyApp extends App {
 	render() {
@@ -6,7 +7,9 @@ class MyApp extends App {
 		return (
 			<container>
 				<p>我是layout 任何page都會套用</p>
-				<Component />
+				<Pages>
+					<Component />
+				</Pages>
 			</container>
 		);
 	}
