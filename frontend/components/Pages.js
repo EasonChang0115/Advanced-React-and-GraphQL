@@ -5,7 +5,7 @@ import styled, { ThemeProvider, injectGlobal } from 'styled-components';
 
 // 全域CSS變數 用ThemeProvider 倒進 各個styled.component 的props中，
 const theme = {
-  red: '#FF0000',
+  mainColor: '#083884',
   black: '#393939',
   grey: '#3A3A3A',
   lightgrey: '#E1E1E1',
@@ -52,6 +52,9 @@ injectGlobal`
     color: ${theme.black};
   }
   button {  font-family: 'radnika_next'; }
+  #nprogress .bar {
+    background: blue !important;
+  }
 `;
 
 class Page extends Component {
