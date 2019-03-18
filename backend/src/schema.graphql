@@ -1,14 +1,8 @@
-# 自定義型別 這種自定義且能展開得型別 稱為 Object Type
-type Dog {
-  # 這種擁有實際值的 field 的型別 (type)，我們稱為 Scalar Type (基礎型別)。
-  # 其他基礎型別還包括 Int, Float, String, Boolean, ID 。
-  name: String!
-}
-
+# import * from './generated/prisma.graphql'
 type Mutation {
-  createDog(name: String!): Dog
+  createItem(title: String, description: String, price: Int, image: String, largeImage: String): Item!
 }
 
 type Query {
-  dogs: [Dog]!
+  items: [Item]!
 }
