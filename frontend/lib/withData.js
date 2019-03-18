@@ -5,6 +5,7 @@ import { endpoint } from '../config';
 function createClient({ headers }) {
   return new ApolloClient({
     uri: process.env.NODE_ENV === 'development' ? endpoint : endpoint,
+    // 當頁面發送請求時 
     request: operation => {
       operation.setContext({
         fetchOptions: {
