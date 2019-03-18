@@ -8,7 +8,12 @@ import formatMoney from '../lib/formatMoney';
 
 class Item extends Component {
   static propTypes = {
-    items: PropTypes.object.isRequired
+    item: PropTypes.object.isRequired
+    // 是否符合指定格式的物件
+    // item: PropTypes.shape({
+    //   title: PropTypes.string.isRequired,
+    //   price: PropTypes.number.isRequired
+    // })
   }
 
   render() {
