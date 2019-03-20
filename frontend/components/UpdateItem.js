@@ -50,7 +50,6 @@ class UpdateItem extends Component {
 
   handleUpdateItem = async (e, updateItemMutation) => {
     e.preventDefault();
-    console.log('Update Item!');
     console.log(this.state);
     const res = await updateItemMutation({
       variables: {
@@ -58,7 +57,6 @@ class UpdateItem extends Component {
         ...this.state
       }
     });
-    console.log('Updated');
   }
 
   render() {
