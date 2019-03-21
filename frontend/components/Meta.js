@@ -8,6 +8,7 @@ const Meta = () => (
     <link rel="shortcut icon" href="/static/favicon.png" />
     <link rel="stylesheet" type="text/css" href="/static/nprogress.css" />
     <title>Lit Blog</title>
+    <meta name="description" content="Something that is fucking amazing in any sense"/>
   </Head>
 );
 

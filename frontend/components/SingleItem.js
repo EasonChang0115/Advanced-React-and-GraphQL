@@ -49,6 +49,7 @@ class SingleItem extends Component {
             <SingleItemStyles>
               <Head>
                 <title>Lit Fits | { item.title }</title>
+                <meta name="description" content={ item.description }/>
               </Head>
               <img src={ item.largeImage } alt={ item.title }/>
               <div className="details">

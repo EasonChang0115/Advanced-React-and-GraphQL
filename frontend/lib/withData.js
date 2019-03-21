@@ -7,7 +7,6 @@ function createClient({ headers }) {
     uri: process.env.NODE_ENV === 'development' ? endpoint : endpoint,
     // 當頁面發送請求時 
     request: operation => {
-      console.log(operation);
       operation.setContext({
         fetchOptions: {
           credentials: 'include',
