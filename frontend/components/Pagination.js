@@ -21,7 +21,6 @@ const Pagination = (props) => (
   <Query fetchPolicy="network-only" query={PAGINATION_QUERY}>{
     ({data, error, loading}) => {
       if (error) return <p>Get pagination error</p>;
-      if (loading) return <p>loading...</p>;
       const count = data.itemsConnection.aggregate.count;
       const pages = Math.ceil(count / perPage);
       const page = props.page;
