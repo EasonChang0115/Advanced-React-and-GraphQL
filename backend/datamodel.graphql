@@ -1,9 +1,22 @@
 # 後端工程師在這邊定義資料庫架構 定義完後 重新 depoly 就可以更新遠端 prisma 資料庫
 # depoly之後就會自動更新 generated/prisma.graphql 的指令內容
+enum Permission {
+  ADMIN
+  USER
+  ITEMCREATE
+  ITEMUPDATE
+  ITEMDELETE
+  PERMISSIONUPDATE
+}
+
 type User {
   id: ID! @unique
   name: String!
-  email: String!
+  email: String! @unique
+  password: String!
+  resetToken: String
+  resetTokenExpiry: Float
+  permission: [Permission]
 }
 
 type Item {
