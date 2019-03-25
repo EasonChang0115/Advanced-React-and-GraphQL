@@ -10,8 +10,6 @@ const Columns = styled.div`
 let SignupPage = props => (
 	<Columns>
 		<Signup />
-		<Signup />
-		<Signup />
 	</Columns>
 )
 
