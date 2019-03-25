@@ -5,6 +5,8 @@ import From from './styles/Form';
 import Router from 'next/router';
 import Error from './ErrorMessage';
 import { resultKeyNameFromField } from 'apollo-utilities';
+import { ALL_ITEMS_QUERY } from './Items';
+import { PAGINATION_QUERY } from './/Pagination';
 
 const CREATE_ITEM_MUTATION = gql`
   mutation CREATE_ITEM_MUTATION(
@@ -61,9 +63,11 @@ class CreateItem extends Component {
   render() {
     return (
       <Mutation
-        
         mutation={CREATE_ITEM_MUTATION}
         variables={this.state}
+        refetchQueries={
+          [{query: ALL_ITEMS_QUERY},{query: PAGINATION_QUERY}]
+        }
       >
         {(createItem, { loading, error }) => (
             <From onSubmit={async (e) => {

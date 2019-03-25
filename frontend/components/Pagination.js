@@ -18,7 +18,7 @@ const PAGINATION_QUERY = gql`
 `;
 
 const Pagination = (props) => (
-  <Query fetchPolicy="network-only" query={PAGINATION_QUERY}>{
+  <Query query={PAGINATION_QUERY}>{
     ({data, error, loading}) => {
       if (error) return <p>Get pagination error</p>;
       const count = data.itemsConnection.aggregate.count;
@@ -53,3 +53,4 @@ const Pagination = (props) => (
 );
 
 export default Pagination;
+export { PAGINATION_QUERY };

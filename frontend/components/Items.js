@@ -37,7 +37,7 @@ class Items extends Component {
       <Center>
         <Query
           query={ALL_ITEMS_QUERY}
-          fetchPolicy="network-only" //可以避免apollo的cache 但會遺失效能
+          // fetchPolicy="network-only" //可以避免apollo的cache 但會遺失效能
           variables={{
             skip: this.props.page * perPage - perPage,
           }}
