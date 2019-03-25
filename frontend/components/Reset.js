@@ -32,10 +32,11 @@ class Reset extends Component {
       <Mutation 
         mutation={RESET_MUTATION} 
         variables={{
-          resetToken: this.props.restToken,
+          resetToken: this.props.resetToken,
           password: this.state.password,
           confirmPassword: this.state.confirmPassword
         }}
+        refetchQueries={[{ query: CURRENT_USER_QUERY }]}
       >
       {
         (reset, { error, loading }) => (
