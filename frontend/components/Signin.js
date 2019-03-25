@@ -46,7 +46,7 @@ class Signin extends Component {
                 Email
                 <input type="email" name="email" id="email" placeholder="Enter your email" value={this.state.email} onChange={this.saveToState}/>
               </label>
-              <label htmlFor="name">
+              <label htmlFor="password">
                 Password
                 <input type="password" name="password" id="password" placeholder="Enter your password" value={this.state.password} onChange={this.saveToState}/>
               </label>
