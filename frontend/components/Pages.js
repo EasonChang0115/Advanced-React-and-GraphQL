@@ -10,19 +10,22 @@ const theme = {
   grey: '#3A3A3A',
   lightgrey: '#E1E1E1',
   offWhite: '#EDEDED',
-  maxWidth: '1000px',
+  maxWidth: '1080px',
   bs: '0 12px 24px 0 rgba(0, 0, 0, 0.09)',
 };
 
 const StyledPage = styled.div`
-  background: white;
+  background: rgba(0, 0, 0, 0.05);
   color: ${props => props.theme.black};
+  min-height: 100%;
 `;
 
 const Inner = styled.div`
   max-width: ${props => props.theme.maxWidth};
   margin: 0 auto;
   padding: 2rem;
+  background-color: white;
+  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.2);
 `;
 
 // css normalize
@@ -36,6 +39,7 @@ injectGlobal`
   html {
     box-sizing: border-box;
     font-size: 10px;
+    height: 100%;
   }
   *, *:before, *:after {
     box-sizing: inherit;
@@ -46,6 +50,10 @@ injectGlobal`
     font-size: 1.5rem;
     line-height: 2;
     font-family: 'radnika_next';
+    height: 100%;
+    div#__next {
+      height: 100%;
+    }
   }
   a {
     text-decoration: none;
@@ -63,8 +71,10 @@ class Page extends Component {
       <ThemeProvider theme={theme}>
         <StyledPage>
           <Meta />
-          <Header />
-          <Inner>{this.props.children}</Inner>
+          <Inner>
+            <Header />
+            {this.props.children}
+          </Inner>
         </StyledPage>
       </ThemeProvider>
     );
