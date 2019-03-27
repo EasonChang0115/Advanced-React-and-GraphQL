@@ -1,3 +1,4 @@
+import React, { Component } from 'react';
 import Nav from './Nav';
 import Link from 'next/link';
 import styled from 'styled-components';
@@ -17,6 +18,7 @@ Router.onRouteChangeError = () => {
 const Logo = styled.h1`
   font-size: 4rem;
   margin-left: 2rem;
+  text-align: center;
   position: relative;
   z-index: 2;
   transform: skew(-7deg);
@@ -34,15 +36,20 @@ const Logo = styled.h1`
 `;
 
 const StyledHeader = styled.header`
-  .bar {
-    border-bottom: 10px solid ${props => props.theme.black};
+  margin-bottom: 1.6rem;
+  .header-logo {
     display: grid;
-    grid-template-columns: auto 1fr;
-    justify-content: space-between;
+    grid-template-columns: 1fr;
     align-items: stretch;
-    @media (max-width: 1300px) {
-      grid-template-columns: 1fr;
-      justify-content: center;
+    justify-content: center;
+  }
+  .header-menu {
+    background-color: rgba(0, 0, 0, 0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .social-media-btn, .search-btn {
+      height: 42px;
     }
   }
   .sub-bar {
@@ -52,21 +59,25 @@ const StyledHeader = styled.header`
   }
 `;
 
-const Header = () => (
-	<StyledHeader>
-		<div className="bar">
-			<Logo>
-				<Link href="/">
-					<a>Lit BLOG</a>
-				</Link>
-			</Logo>
-			<Nav></Nav>
-		</div>
-		<div className="sub-bar">
-			<p>search</p>
-		</div>
-		<div>Cart</div>
-	</StyledHeader>
-)
+class Header extends Component {
+  render() {
+    return (
+    <StyledHeader>
+      <div className="header-logo">
+        <Logo>
+          <Link href="/">
+            <a>Lit BLOG</a>
+          </Link>
+        </Logo>
+      </div>
+      <div className="header-menu">
+        <div className="social-media-btn"></div>
+        <Nav></Nav>
+        <div className="search-btn"></div>
+      </div>
+    </StyledHeader>)
+  }
+	
+}
 
 export default Header;

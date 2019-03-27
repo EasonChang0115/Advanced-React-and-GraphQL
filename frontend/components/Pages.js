@@ -30,12 +30,7 @@ const Inner = styled.div`
 
 // css normalize
 injectGlobal`
-  @font-face {
-    font-family: 'radnika_next';
-    src: url('/static/radnikanext-medium-webfont.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
-  }
+  @import url('https://fonts.googleapis.com/css?family=Roboto:400,700,700i');
   html {
     box-sizing: border-box;
     font-size: 10px;
@@ -47,9 +42,9 @@ injectGlobal`
   body {
     padding: 0;
     margin: 0;
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     line-height: 2;
-    font-family: 'radnika_next';
+    font-family: 'Roboto', sans-serif;
     height: 100%;
     div#__next {
       height: 100%;
@@ -59,7 +54,7 @@ injectGlobal`
     text-decoration: none;
     color: ${theme.black};
   }
-  button {  font-family: 'radnika_next'; }
+  button {  font-family: 'Roboto', sans-serif; }
   #nprogress .bar {
     background: blue !important;
   }
