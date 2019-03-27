@@ -30,7 +30,7 @@ const Inner = styled.div`
 
 // css normalize
 injectGlobal`
-  @import url('https://fonts.googleapis.com/css?family=Roboto:400,700,700i');
+  @import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700,700i');
   html {
     box-sizing: border-box;
     font-size: 10px;
