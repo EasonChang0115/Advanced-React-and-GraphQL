@@ -4,6 +4,10 @@ const Query = {
   items: forwardTo('db'),
   item: forwardTo('db'),
   itemsConnection: forwardTo('db'),
+  // 文章列表
+  article: forwardTo('db'),
+  articles: forwardTo('db'),
+  articlesConnection: forwardTo('db'),
   // me 需要token 驗證 所以要自己寫query 函式
   me (parent, args, ctx, info) {
     // check if there is a current user ID

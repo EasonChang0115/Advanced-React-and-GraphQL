@@ -4,13 +4,13 @@ import PropTypes from 'prop-types';
 
 class ArticleCard extends Component {
   static propTypes = {
-    prop: PropTypes
+    article: PropTypes.object.isRequired
   };
 
   render() {
     return (
       <div>
-        <p>article</p>
+        <p>{this.props.article.title}</p>
       </div>
     );
   }

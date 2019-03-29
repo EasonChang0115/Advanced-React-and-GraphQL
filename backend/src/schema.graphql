@@ -25,5 +25,10 @@ type Query {
   items(where: ItemWhereInput, orderBy: ItemOrderByInput, skip: Int, first: Int): [Item]!
   item(where: ItemWhereUniqueInput! ): Item
   itemsConnection(where: ItemWhereInput): ItemConnection!
+  
+  article(where: ArticleWhereUniqueInput!): Article
+  articles(where: ArticleWhereInput, orderBy: ArticleOrderByInput, skip: Int, first: Int): [Article]!
+  articlesConnection(where: ArticleWhereInput): ArticleConnection!
+
   me: User
 }
