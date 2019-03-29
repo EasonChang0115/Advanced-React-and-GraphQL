@@ -9,6 +9,16 @@ enum Permission {
   PERMISSIONUPDATE
 }
 
+type Article {
+  id: ID! @unique
+  author: [User]
+  title: String!
+  image: String
+  content: String!
+  createAt: DateTime!
+  updatedAt: DateTime!
+}
+
 type User {
   id: ID! @unique
   name: String!
@@ -17,6 +27,7 @@ type User {
   resetToken: String
   resetTokenExpiry: Float
   permission: [Permission]
+  articles: [Article!]
 }
 
 type Item {

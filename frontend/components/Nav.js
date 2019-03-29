@@ -7,6 +7,9 @@ const Nav = () => (
   <User>
     {({data: { me }}) => (
       <NavStyles>
+        <Link href="/">
+          <a>首頁</a>
+        </Link>
         <Link href="/items">
           <a>Shop</a>
         </Link>
@@ -20,7 +23,7 @@ const Nav = () => (
                 <a>Orders</a>
               </Link>
               <Link href="/me">
-                <a>Account</a>
+                <a>關於我</a>
               </Link>
               <Signout></Signout>
             </>

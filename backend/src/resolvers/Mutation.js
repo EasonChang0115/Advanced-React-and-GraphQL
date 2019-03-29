@@ -106,7 +106,7 @@ const Mutations = {
     return { message: 'Thanks!' };
     // 3. Email them that reset token
   },
- async resetPassword(parent, args, ctx, info) {
+  async resetPassword(parent, args, ctx, info) {
     // 1. check if the passwords match
     if (args.password !== args.confirmPassword) {
       throw new Error("Yo Passwords don't match!");
