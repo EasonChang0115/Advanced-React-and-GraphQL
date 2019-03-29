@@ -16,15 +16,17 @@ const ALL_ARTICLES_QUERY = gql`
       }
       content
       image
+      createAt
     }
   }
 `;
 
 const ArticleList = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-gap: 60px;
+  grid-template-columns: 1fr;
+  grid-gap: 50px;
   max-width: ${props => props.theme.maxWidth};
+  padding: 0 15px;
   margin: 0 auto;
 `;
 

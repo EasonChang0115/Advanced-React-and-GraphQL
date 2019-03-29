@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Header from '../components/Header';
 import Meta from '../components/Meta';
+import ScrollButton from '../components/ScrollTopButton';
 import styled, { ThemeProvider, injectGlobal } from 'styled-components';
 
 // 全域CSS變數 用ThemeProvider 倒進 各個styled.component 的props中，
@@ -12,6 +13,8 @@ const theme = {
   offWhite: '#EDEDED',
   maxWidth: '1080px',
   bs: '0 12px 24px 0 rgba(0, 0, 0, 0.09)',
+  mediaPad: '750px',
+  mediaPhone: '460px'
 };
 
 const StyledPage = styled.div`
@@ -69,6 +72,7 @@ class Page extends Component {
           <Inner>
             <Header />
             {this.props.children}
+            <ScrollButton scrollStepInPx="50" delayInMs="16.66"/>
           </Inner>
         </StyledPage>
       </ThemeProvider>
