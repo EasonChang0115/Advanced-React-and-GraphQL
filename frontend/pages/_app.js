@@ -3,6 +3,11 @@ import Pages from '../components/Pages';
 import { ApolloProvider } from 'react-apollo';
 import widthData from '../lib/withData';
 
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faAngleDoubleUp } from '@fortawesome/free-solid-svg-icons';
+
+library.add(faAngleDoubleUp);
+
 class MyApp extends App {
 	// Next 對 React 的 props生命週期 傳入做了控制
 	// 主要用於 server 端的數據會序列話傳到 client端的props中 寫入HTML原碼裡，而client端就可以用傳過來的數據做組件的變化。

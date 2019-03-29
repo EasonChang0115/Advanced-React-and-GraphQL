@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const ScrollButton = styled.button`
   opacity: 0.3;
-  background-color: aqua;
+  background-color: ${props => props.theme.mainColor};
   width: 40px;
   height: 40px;
   position: fixed;
@@ -12,18 +13,22 @@ const ScrollButton = styled.button`
   right: 10px;
   border-radius: 5px;
   border: none;
-  
+  transition: .3s;
+  cursor: pointer;
+  outline: none;
   &:hover {
     opacity: 1;
   }
 
   .arrow-up {
     color: white;
+    text-align: center;
     position: absolute;
     top: 50%;
     left: 50%;
     margin-top: -9px;
     margin-left: -5px;
+    cursor: pointer;
   }
 `; 
 
@@ -55,7 +60,7 @@ class ScrollTopButton extends Component {
   render() {
     return (
     <ScrollButton onClick={ () => { this.scrollToTop(); }}>
-      <span className='arrow-up glyphicon glyphicon-chevron-up'></span>
+      <FontAwesomeIcon className='arrow-up' icon="angle-double-up"></FontAwesomeIcon>
     </ScrollButton>);
   }
 }

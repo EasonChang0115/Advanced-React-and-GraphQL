@@ -72,7 +72,7 @@ class Page extends Component {
           <Inner>
             <Header />
             {this.props.children}
-            <ScrollButton scrollStepInPx="50" delayInMs="16.66"/>
+            <ScrollButton scrollStepInPx={50} delayInMs={16.66}/>
           </Inner>
         </StyledPage>
       </ThemeProvider>
