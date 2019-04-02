@@ -6,7 +6,7 @@ import ArticleCardStyle from './styles/ArticleCard';
 
 let LinkTag = props => (
   <Link prefetch href={{
-    pathname: '/article',
+    pathname: '/',
     query: { id: props.id }
   }}
   >
