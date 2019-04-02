@@ -4,6 +4,11 @@ import Articles from '../components/Articles';
 const HomeLayout = styled.div`
 	display: grid;
 	grid-template-columns: 8fr 3fr;
+	.articles-wrap {
+		display: grid;
+		justify-content: center;
+  	align-items: center; 
+	}
 	.sidebar-wrap {
 		background-color: rgba(255, 0, 0, 0.1);
 	}

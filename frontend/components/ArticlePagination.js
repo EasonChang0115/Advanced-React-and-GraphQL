@@ -18,26 +18,29 @@ const PAGINATION_ARTICLE_QUERY = gql`
 
 const Pagination = (props) => (
   <Query query={PAGINATION_ARTICLE_QUERY}>{
-    ({data, error, loading}) => {
+    ({ data, error }) => {
       if (error) return <p>Get pagination error</p>;
       const count = data.articlesConnection.aggregate.count;
       const pages = Math.ceil(count / perPage);
       const page = props.page;
+      const pageTag = [];
+      for (let i = 1; i <= pages; i += 1 ) {
+        pageTag.push(<Link prefetch key={i} href={{
+          pathname: '',
+          query: { page: i }
+        }}> 
+          <a className={i === page ? 'page active' : 'page'}>{ i }</a>
+        </Link>);
+      }
       return (
         <PaginationStyles>
-          <Head>
-            <title>Lit Blog {page} of {pages}</title>
-          </Head>
           <Link prefetch href={{
             pathname: '',
             query: { page: page -1 }
           }}> 
             <a className="prev" aria-disabled={page <= 1}>← Prev</a>
           </Link>
-          <p>
-            Page {props.page} of {pages}!
-          </p>
-          <p>{count} Items Total</p>
+          {pageTag}
           <Link prefetch href={{
             pathname: '',
             query: { page: page + 1 }
