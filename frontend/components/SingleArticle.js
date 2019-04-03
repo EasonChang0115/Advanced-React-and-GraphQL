@@ -3,7 +3,7 @@ import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
 import Error from './ErrorMessage';
 import styled from 'styled-components';
-import ReactMarkdown from "react-markdown";
+import MDReactComponent from 'markdown-react-js';
 import Head from 'next/head';
 
 const SingleArticleStyles = styled.div`
@@ -53,7 +53,7 @@ class SingleArticle extends Component {
               </Head>
               <img src={ article.image } alt={ article.title }/>
               <article className="details">
-                <ReactMarkdown source={ article.content } />
+                <MDReactComponent text={article.content} />   
               </article>
             </SingleArticleStyles>)
            }
