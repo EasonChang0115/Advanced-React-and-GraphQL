@@ -1,5 +1,4 @@
 import Head from 'next/head';
-import item from '../pages/item';
 
 const Meta = () => (
   <Head>

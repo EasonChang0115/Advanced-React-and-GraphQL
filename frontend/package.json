@@ -45,11 +45,13 @@
     "babel-jest": "^23.6.0",
     "babel-plugin-module-resolver": "^3.1.1",
     "casual": "^1.5.19",
+    "classnames": "^2.2.6",
     "enzyme-to-json": "^3.3.4",
     "graphql-tools": "^4.0.0",
+    "highlight.js": "^9.13.1",
     "jest": "^23.6.0",
     "jest-transform-graphql": "^2.1.0",
-    "markdown-react-js": "^1.0.2"
+    "marked": "^0.5.2"
   },
   "jest": {
     "setupTestFrameworkScriptFile": "<rootDir>/jest.setup.js",

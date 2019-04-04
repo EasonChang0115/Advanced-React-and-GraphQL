@@ -3,8 +3,8 @@ import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
 import Error from './ErrorMessage';
 import styled from 'styled-components';
-import MDReactComponent from 'markdown-react-js';
 import Head from 'next/head';
+import MdView from './markdown/MdView';
 
 const SingleArticleStyles = styled.div`
   min-height: 100%;
@@ -36,6 +36,7 @@ const SINGLE_ARTICLE_QUERY = gql`
 
 class SingleArticle extends Component {
   render() {
+    let string = "# Three.js 製作 3D 特效網頁（入門）\n\n\n\n\n\n### Three.js介紹\n\n* 在網頁上製作3D的函式庫\n\n* 基於 WebGL \n\n* 範例：互動專輯、品牌網頁、互動MV、視覺藝術\n\n![](https://i.imgur.com/J295JDf.jpg)\n\n\n\n---\n\n";
     return (
       <Query 
         query={ SINGLE_ARTICLE_QUERY } 
@@ -53,7 +54,7 @@ class SingleArticle extends Component {
               </Head>
               <img src={ article.image } alt={ article.title }/>
               <article className="details">
-                <MDReactComponent text={article.content} />   
+                <MdView value={ string } />
               </article>
             </SingleArticleStyles>)
            }

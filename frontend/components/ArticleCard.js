@@ -35,7 +35,7 @@ class ArticleCard extends Component {
             </LinkTag>
           </h2>
           <div className="card-content">
-            <p>{content}</p>
+            <p>{content.slice(0, 200)}</p>
             <LinkTag id={id}><a className="article-link">閱讀全文</a></LinkTag>
           </div>
           <h4 className="author">By {author[0].name}<span>{createAt.slice(0, 10)}</span></h4>
