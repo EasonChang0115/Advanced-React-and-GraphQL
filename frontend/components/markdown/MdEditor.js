@@ -4,16 +4,13 @@ import MdEditorStyles from '../styles/MdEditorStyles';
 import MdView from './MdView';
 import textInsert from '../../lib/insertText';
 import keydownListen from '../../lib/keydownListen';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 class MdEditor extends Component {
   constructor(props) {
     super(props);
-
     this.$vm = null;
-    this.handleEditorRef = $vm => {
-      this.$vm = $vm;
-    };
-
+    this.handleEditorRef = $vm => {this.$vm = $vm;};
     this.state = {
       preview: false,
       f_history: [],
@@ -21,16 +18,13 @@ class MdEditor extends Component {
       line_index: 1
     };
   }
-
   static defaultProps = {
     placeholder: '請輸入內容',
     lineNum: true
   }
-
   componentDidMount() {
     keydownListen(this);
   }
-
   componentWillUpdate(props, state) {
     const { f_history } = this.state;
     if (props.value && state.f_history.length === 0) {
@@ -41,13 +35,11 @@ class MdEditor extends Component {
       this.handleLineIndex(props.value);
     }
   }
-
   handleChange = e => {
     const value = e.target.value;
     this.saveHistory(value);
     this.props.onChange(value);
   }
-
   // 快速鍵
   insert = e => {
     const { $vm } = this;
@@ -56,7 +48,6 @@ class MdEditor extends Component {
     this.props.onChange($vm.value);
     this.saveHistory($vm.value);
   }
-
   // 紀錄
   saveHistory(value) {
     let { f_history, f_history_index } = this.state;
@@ -81,14 +72,12 @@ class MdEditor extends Component {
     // 幾行
     this.handleLineIndex(value);
   }
-
   handleLineIndex(value) {
     const line_index = value ? value.split('\n').length : 1;
     this.setState({
       line_index
     });
   }
-
   undo = () => {
     const { f_history } = this.state;
     let { f_history_index } = this.state;
@@ -98,11 +87,9 @@ class MdEditor extends Component {
       f_history_index
     })
     const value = f_history[f_history_index];
-    // 将值传递给父组件
     this.props.onChange(value);
     this.handleLineIndex(value);
   }
-
   redo = () => {
     const { f_history } = this.state;
     let { f_history_index } = this.state;
@@ -112,24 +99,20 @@ class MdEditor extends Component {
       f_history_index
     });
     const value = f_history[f_history_index];
-    // 将值传递给父组件
     this.props.onChange(value);
     this.handleLineIndex(value);
   }
-
   // 預覽
   preview = () => {
     this.setState({
       preview: !this.state.preview
     });
   }
-
   // 聚焦
   focusText = () => {
     const { $vm } = this;
     $vm.focus();
   }
-
   render() {
     const { preview, line_index } = this.state;
     const { value } = this.props;
@@ -138,20 +121,20 @@ class MdEditor extends Component {
       for (let i = 0; i < line_index; i++) {
         list.push(<li key={i + 1}>{i + 1}</li>)
       };
-      return <ul className="for-line-num">{list}</ul>;
+      return <ul className="line-num">{list}</ul>;
     }
     return (
       <MdEditorStyles>
         <Head>
           <link rel="stylesheet" type="text/css" href="/static/tomorrow.css" />
         </Head>
-        <div className="for-controlbar">
+        <div className="controlbar">
           <ul>
             <li onClick={this.undo} title="上一步 (ctrl+z)">
-              上一步
+              <FontAwesomeIcon icon="undo-alt"></FontAwesomeIcon>
             </li>
             <li onClick={this.redo} title="下一步 (ctrl+y)">
-              下一步
+              <FontAwesomeIcon icon="redo-alt"></FontAwesomeIcon>
             </li>
             <li data-type="h1" onClick={this.insert} title="H1">
               H1
@@ -166,13 +149,16 @@ class MdEditor extends Component {
               H4
             </li>
             <li data-type="image" onClick={this.insert} title="圖片">
-              圖片
+              <FontAwesomeIcon icon="image"></FontAwesomeIcon>
             </li>
             <li data-type="link" onClick={this.insert} title="超連結">
-              超連結
+              <FontAwesomeIcon icon="link"></FontAwesomeIcon>
             </li>
             <li data-type="code" onClick={this.insert} title="程式碼片段">
-              程式碼片段
+              <FontAwesomeIcon icon="code"></FontAwesomeIcon>
+            </li>
+            <li data-type="reference" onClick={this.insert} title="引用">
+              <FontAwesomeIcon icon="quote-left"></FontAwesomeIcon>
             </li>
           </ul>
           <ul>
@@ -181,12 +167,12 @@ class MdEditor extends Component {
             </li>
           </ul>
         </div>
-        <div className="for-editor">
-          <div className="for-panel" tabIndex="-1" onFocus={this.focusText}>
-            <div className="for-editor-wrapper">
-              <div className={!preview ? 'for-editor-block' : "for-editor-block hidden"}>
+        <div className="editor">
+          <div className="panel" tabIndex="-1" onFocus={this.focusText}>
+            <div className="editor-wrapper">
+              <div className={!preview ? 'editor-block' : "editor-block hidden"}>
                 {lineNum()}
-                <div className="for-editor-content">
+                <div className="editor-content">
                   <pre>{value}</pre>
                   <textarea
                     ref={this.handleEditorRef}

@@ -7,6 +7,8 @@ import styled, { ThemeProvider, injectGlobal } from 'styled-components';
 // 全域CSS變數 用ThemeProvider 倒進 各個styled.component 的props中，
 const theme = {
   mainColor: '#083884',
+  saveColor: '#7bc67b',
+  releaseColor: '#f77fee',
   black: '#393939',
   grey: '#3A3A3A',
   lightgrey: '#E1E1E1',

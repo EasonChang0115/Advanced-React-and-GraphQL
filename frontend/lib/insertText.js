@@ -55,6 +55,9 @@ const toolbar = {
   code($vm) {
     insert($vm, '```', 'language', '\n\n```')
   },
+  reference($vm) {
+    insert($vm, '>', 'text')
+  },
   tab($vm) {
     insert($vm, '  ')
   }

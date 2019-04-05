@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import MdViewStyles from '../styles/MdViewStyles';
 import marked from '../../lib/marked';
 
-
 class MdView extends Component {
   static defaultProps = {
     value: '',

@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 
 const MdViewStyles = styled.div`
+  .markdown-view {
+    width: 100%;
+  }
   display: ${props => props.isShow ? 'flex' : 'none'};
   line-height: 2;
   padding: 8px;

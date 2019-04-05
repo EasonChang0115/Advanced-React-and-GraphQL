@@ -82,11 +82,16 @@ const Mutations = {
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24 * 365, // 1 year cookie
     });
+    ctx.response.cookie('user_id', user.id, {
+      httpOnly: true,
+      maxAge: 1000 * 60 * 60 * 24 * 365, // 1 year cookie
+    });
     // 5. return the user
     return user;
   },
   signout(parent, args, ctx, info) {
     ctx.response.clearCookie('token');
+    ctx.response.clearCookie('user_id');
     return { message: 'Goodbye!' };
   },
   async requestReset(parent, args, ctx, info) {
