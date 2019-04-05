@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
+import MdViewStyles from '../styles/MdViewStyles';
 import marked from '../../lib/marked';
 
-
-const MdViewStyles = styled.div`
-  display: ${props => props.isShow ? 'flex' : 'none'};
-`;
 
 class MdView extends Component {
   static defaultProps = {

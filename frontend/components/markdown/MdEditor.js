@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Head from 'next/head';
-import classNames from 'classnames';
 import MdEditorStyles from '../styles/MdEditorStyles';
 import MdView from './MdView';
 import textInsert from '../../lib/insertText';
@@ -12,12 +11,11 @@ class MdEditor extends Component {
 
     this.$vm = null;
     this.handleEditorRef = $vm => {
-      this.$vm = $vm
+      this.$vm = $vm;
     };
 
     this.state = {
       preview: false,
-      expand: false,
       f_history: [],
       f_history_index: 0,
       line_index: 1
@@ -30,28 +28,27 @@ class MdEditor extends Component {
   }
 
   componentDidMount() {
-    keydownListen(this)
+    keydownListen(this);
   }
 
   componentWillUpdate(props, state) {
-    const { f_history } = this.state
+    const { f_history } = this.state;
     if (props.value && state.f_history.length === 0) {
-      f_history.push(props.value)
+      f_history.push(props.value);
       this.setState({
         f_history
-      })
-      this.handleLineIndex(props.value)
+      });
+      this.handleLineIndex(props.value);
     }
   }
 
-  // 输入框改变
   handleChange = e => {
     const value = e.target.value;
     this.saveHistory(value);
     this.props.onChange(value);
   }
 
-  // 快捷插入
+  // 快速鍵
   insert = e => {
     const { $vm } = this;
     const type = e.currentTarget ? e.currentTarget.getAttribute('data-type') : e;
@@ -60,7 +57,7 @@ class MdEditor extends Component {
     this.saveHistory($vm.value);
   }
 
-  // 保存记录
+  // 紀錄
   saveHistory(value) {
     let { f_history, f_history_index } = this.state;
     window.clearTimeout(this.currentTimeout);
@@ -81,99 +78,68 @@ class MdEditor extends Component {
         f_history_index
       })
     }, 500);
-    // 行号
+    // 幾行
     this.handleLineIndex(value);
   }
 
   handleLineIndex(value) {
-    const line_index = value ? value.split('\n').length : 1
+    const line_index = value ? value.split('\n').length : 1;
     this.setState({
       line_index
-    })
+    });
   }
 
   undo = () => {
-    const { f_history } = this.state
-    let { f_history_index } = this.state
-    f_history_index = f_history_index - 1
-    if (f_history_index < 0) return
+    const { f_history } = this.state;
+    let { f_history_index } = this.state;
+    f_history_index = f_history_index - 1;
+    if (f_history_index < 0) return;
     this.setState({
       f_history_index
     })
-    const value = f_history[f_history_index]
+    const value = f_history[f_history_index];
     // 将值传递给父组件
-    this.props.onChange(value)
-    this.handleLineIndex(value)
+    this.props.onChange(value);
+    this.handleLineIndex(value);
   }
 
   redo = () => {
-    const { f_history } = this.state
-    let { f_history_index } = this.state
-    f_history_index = f_history_index + 1
-    if (f_history_index >= f_history.length) return
+    const { f_history } = this.state;
+    let { f_history_index } = this.state;
+    f_history_index = f_history_index + 1;
+    if (f_history_index >= f_history.length) return;
     this.setState({
       f_history_index
-    })
-    const value = f_history[f_history_index]
+    });
+    const value = f_history[f_history_index];
     // 将值传递给父组件
-    this.props.onChange(value)
-    this.handleLineIndex(value)
+    this.props.onChange(value);
+    this.handleLineIndex(value);
   }
 
   // 預覽
   preview = () => {
     this.setState({
       preview: !this.state.preview
-    })
+    });
   }
 
-  // 全屏
-  expand = () => {
-    this.setState({
-      expand: !this.state.expand
-    })
-  }
-
-  // 保存
-  save = () => {
-    this.props.onSave()
-  }
-
-  // 左侧空白区点击后，textarea聚焦
+  // 聚焦
   focusText = () => {
-    const { $vm } = this
-    $vm.focus()
+    const { $vm } = this;
+    $vm.focus();
   }
 
   render() {
-    const { preview, expand, line_index } = this.state
-    const { value } = this.props
-    const editorClass = classNames({
-      'for-panel': true
-    })
-    const previewActive = classNames({
-      'for-active': preview
-    })
-    const fullscreen = classNames({
-      'for-container': true,
-      'for-fullscreen': expand
-    })
-    const expandActive = classNames({
-      'for-active': expand
-    })
-    const lineNumStyles = classNames({
-      'for-line-num': true,
-      hidden: !this.props.lineNum
-    })
-
+    const { preview, line_index } = this.state;
+    const { value } = this.props;
     const lineNum = function() {
-      const list = []
+      const list = [];
       for (let i = 0; i < line_index; i++) {
         list.push(<li key={i + 1}>{i + 1}</li>)
-      }
-      return <ul className={lineNumStyles}>{list}</ul>
+      };
+      return <ul className="for-line-num">{list}</ul>;
     }
-
     return (
       <MdEditorStyles>
         <Head>
@@ -208,23 +174,20 @@ class MdEditor extends Component {
             <li data-type="code" onClick={this.insert} title="程式碼片段">
               程式碼片段
             </li>
-            <li onClick={this.save} title="儲存 (ctrl+s)">
-              儲存
-            </li>
           </ul>
           <ul>
-            <li className={previewActive} onClick={this.preview}>
+            <li className={preview ? 'for-active' : ''} onClick={this.preview}>
               預覽
             </li>
           </ul>
         </div>
         <div className="for-editor">
-          <div className={editorClass} tabIndex="-1" onFocus={this.focusText}>
+          <div className="for-panel" tabIndex="-1" onFocus={this.focusText}>
             <div className="for-editor-wrapper">
-              <div className="for-editor-block">
+              <div className={!preview ? 'for-editor-block' : "for-editor-block hidden"}>
                 {lineNum()}
                 <div className="for-editor-content">
-                  <pre>{value} </pre>
+                  <pre>{value}</pre>
                   <textarea
                     ref={this.handleEditorRef}
                     value={value}
@@ -233,9 +196,9 @@ class MdEditor extends Component {
                   />
                 </div>
               </div>
+              <MdView value={value} isShow={preview}/>
             </div>
           </div>
-          <MdView value={this.props.value} isShow={this.state.preview}/>
         </div>
       </MdEditorStyles>
     )

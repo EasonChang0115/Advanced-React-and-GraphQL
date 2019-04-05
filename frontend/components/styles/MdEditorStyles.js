@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 const MdEditorStyles = styled.nav`
-  font-family: 'Source Sans Pro', 'Helvetica Neue', Arial, sans-serif;
   display: flex;
   flex-direction: column;
   height: 600px;
@@ -14,14 +13,13 @@ const MdEditorStyles = styled.nav`
     padding: 0;
   }
   .for-controlbar {
-    font-family: 'Source Sans Pro', 'Helvetica Neue', Arial, sans-serif;
     display: flex;
     justify-content: space-between;
     padding: 0 6px;
     border-bottom: 1px solid #ddd;
     color: #555;
     user-select: none;
-
+    background-color: rgba(0, 0, 0, 0.05);
     >ul {
       display: flex;
 
@@ -48,7 +46,6 @@ const MdEditorStyles = styled.nav`
       }
     }
   }
-
   .for-editor {
     display: flex;
     justify-content: space-between;
@@ -56,7 +53,6 @@ const MdEditorStyles = styled.nav`
     color: rgba(0, 0, 0, 0.65);
     border-radius: 0 0 4px 4px;
     overflow: hidden;
-
     .for-panel {
       height: 100%;
       flex: 1;
@@ -68,23 +64,17 @@ const MdEditorStyles = styled.nav`
         background: #fcfcfc;
       }
     }
-    .for-panel:last-child {
-      border-left: 1px solid #ccc;
-    }
-
-    .for-preview-hidden {
-      display: none;
-    }
     .for-editor-wrapper {
       line-height: 1.6;
       height: 100%;
-
       .for-editor-block {
         display: flex;
         justify-content: space-between;
         min-height: 100%;
+        &.hidden {
+          display: none;
+        }
       }
-
       .for-line-num {
         list-style: none;
         background: #eee;
@@ -99,13 +89,11 @@ const MdEditorStyles = styled.nav`
         }
 
       }
-
       .for-editor-content {
         flex: 1;
         position: relative;
         height: 100%;
         margin-left: 10px;
-
         pre {
           padding: 8px 0;
           display: block;
@@ -115,28 +103,27 @@ const MdEditorStyles = styled.nav`
           margin: 0;
           font-family: inherit;
         }
+        textarea {
+          font-family: 'Consolas', 'Source Sans Pro', 'Helvetica Neue', Arial, sans-serif;
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          padding: 8px 0;
+          font-family: inherit;
+          display: block;
+          height: 100%;
+          width: 100%;
+          overflow: hidden;
+          resize: none;
+          border: none;
+          outline: none;
+          font-size: inherit;
+          color: rgba(0, 0, 0, 0.65);
+          background: none;
+          line-height: inherit;
+        }
       }
     }
-  }
-
-  textarea {
-    font-family: 'Consolas', 'Source Sans Pro', 'Helvetica Neue', Arial, sans-serif;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    padding: 8px 0;
-    font-family: inherit;
-    display: block;
-    height: 100%;
-    width: 100%;
-    overflow: hidden;
-    resize: none;
-    border: none;
-    outline: none;
-    font-size: inherit;
-    color: rgba(0, 0, 0, 0.65);
-    background: none;
-    line-height: inherit;
   }
 `;
 
