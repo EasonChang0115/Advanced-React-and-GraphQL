@@ -12,9 +12,9 @@ enum Permission {
 type Article {
   id: ID! @unique
   author: [User]
-  title: String!
+  title: String
   image: String
-  content: String!
+  content: String
   createAt: DateTime!
   updatedAt: DateTime!
 }

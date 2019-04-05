@@ -1,5 +1,5 @@
 # source: https://us1.prisma.sh/eason-c56c5d/jaaaaason-fits/dev
-# timestamp: Fri Mar 29 2019 13:38:28 GMT+0800 (台北標準時間)
+# timestamp: Fri Apr 05 2019 19:53:42 GMT+0800 (GMT+08:00)
 
 type AggregateArticle {
   count: Int!
@@ -16,9 +16,9 @@ type AggregateUser {
 type Article implements Node {
   id: ID!
   author(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
-  title: String!
+  title: String
   image: String
-  content: String!
+  content: String
   createAt: DateTime!
   updatedAt: DateTime!
 }
@@ -35,9 +35,9 @@ type ArticleConnection {
 
 input ArticleCreateInput {
   id: ID
-  title: String!
+  title: String
   image: String
-  content: String!
+  content: String
   createAt: DateTime!
   author: UserCreateManyWithoutArticlesInput
 }
@@ -49,9 +49,9 @@ input ArticleCreateManyWithoutAuthorInput {
 
 input ArticleCreateWithoutAuthorInput {
   id: ID
-  title: String!
+  title: String
   image: String
-  content: String!
+  content: String
   createAt: DateTime!
 }
 
@@ -83,9 +83,9 @@ enum ArticleOrderByInput {
 
 type ArticlePreviousValues {
   id: ID!
-  title: String!
+  title: String
   image: String
-  content: String!
+  content: String
   createAt: DateTime!
   updatedAt: DateTime!
 }

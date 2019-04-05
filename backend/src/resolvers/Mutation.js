@@ -5,8 +5,20 @@ const { promisify } = require('util');
 
 const Mutations = {
   async createItem(parent, args, ctx, info) {
-    // TODO: Check if they are loggef in
+    // TODO: Check if they are logged in
     const item = await ctx.db.mutation.createItem(
+      {
+        data: {
+          ...args,
+        },
+      },
+      info
+    );
+    return item;
+  },
+  async createArticle(parent, args, ctx, info) {
+    // TODO: Check if they are logged in
+    const item = await ctx.db.mutation.createArticle(
       {
         data: {
           ...args,
