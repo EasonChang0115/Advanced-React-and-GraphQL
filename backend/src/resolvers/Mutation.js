@@ -18,15 +18,25 @@ const Mutations = {
   },
   async createArticle(parent, args, ctx, info) {
     // TODO: Check if they are logged in
-    const item = await ctx.db.mutation.createArticle(
+    const { userId } = ctx.request;
+    if (!userId) {
+      throw new Error('You must be signed in soooon');
+    }
+    const datas = {...args};
+    const article = await ctx.db.mutation.createArticle(
       {
         data: {
-          ...args,
-        },
+          ...datas,
+          author: {
+            connect: {
+              id: userId
+            }
+          }
+        }
       },
       info
     );
-    return item;
+    return article;
   },
   updateItem(parent, args, ctx, info) {
     // first take a copy of the udates
@@ -94,16 +104,11 @@ const Mutations = {
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24 * 365, // 1 year cookie
     });
-    ctx.response.cookie('user_id', user.id, {
-      httpOnly: true,
-      maxAge: 1000 * 60 * 60 * 24 * 365, // 1 year cookie
-    });
     // 5. return the user
     return user;
   },
   signout(parent, args, ctx, info) {
     ctx.response.clearCookie('token');
-    ctx.response.clearCookie('user_id');
     return { message: 'Goodbye!' };
   },
   async requestReset(parent, args, ctx, info) {

@@ -15,7 +15,7 @@ type Mutation {
   updateItem(id: ID!, title: String, description: String, price: Int): Item!
   deleteItem(id: ID!): Item
 
-  createArticle(title: String, content: String, image: String, createAt: String, author: String): Article!
+  createArticle(title: String, content: String, image: String, createAt: String): Article!
 
   signup(email: String!, password: String!, name: String!): User!
   signin(email: String!, password: String!): User!
