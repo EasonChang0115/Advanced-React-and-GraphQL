@@ -26,8 +26,8 @@ const ArticleList = styled.div`
   grid-template-columns: 1fr;
   grid-gap: 50px;
   max-width: ${props => props.theme.maxWidth};
-  padding: 0 15px;
   margin: 0 auto;
+  padding: 0 15px;
 `;
 
 class Articles extends Component {

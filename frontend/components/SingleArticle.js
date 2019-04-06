@@ -54,7 +54,7 @@ class SingleArticle extends Component {
               </Head>
               <img src={ article.image } alt={ article.title }/>
               <article className="details">
-                <MdView value={ string } />
+                <MdView value={ article.content } />
               </article>
             </SingleArticleStyles>)
            }

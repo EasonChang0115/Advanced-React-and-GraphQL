@@ -1,8 +1,34 @@
 import React, { Component } from 'react';
+import { Mutation } from 'react-apollo';
+import gql from 'graphql-tag';
 import styled from 'styled-components';
+import moment from 'moment';
+import { ALL_ARTICLES_QUERY } from './Articles';
+import { PAGINATION_ARTICLE_QUERY } from './ArticlePagination';
+
+import Router from 'next/router';
+import Error from './ErrorMessage';
 import Title from './markdown/Title';
 import TagBar from './markdown/TagBar';
 import MdEditor from './markdown/MdEditor';
+
+const CREATE_ARTICLE_MUTATION = gql`
+  mutation CREATE_ARTICLE_MUTATION(
+    $title: String
+    $content: String
+    $createAt: String!
+    $image: String
+  ) {
+    createArticle(
+      title: $title
+      content: $content
+      createAt: $createAt
+      image: $image
+    ) {
+      id
+    }
+  }
+`;
 
 const CreateArticleStyles = styled.div`
   background-color: white;
@@ -13,6 +39,7 @@ class CreateArticle extends Component {
   state = {
     title: '',
     content: '',
+    image: '',
     tags: ['jacascript']
   }
   handleTitleChange = e => {
@@ -42,22 +69,48 @@ class CreateArticle extends Component {
   }
   render() {
     return (
-      <>
-        <CreateArticleStyles>
-          <Title placeholder="在這裡幫文章下個好標題..." title={this.state.title} titleChangeFunc={this.handleTitleChange}/>
-          <MdEditor value={this.state.value} 
-            onChange={(value) => { this.setState({
-              content: value
-            }); }} 
-            onSave={(e) => { console.log(e);}}/>
-        </CreateArticleStyles>
-        <TagBar tags={this.state.tags} 
-          addtagFunc={this.handleAddTag} 
-          removetagFunc={this.handleremoveTag}
-          saveFunc={this.handleSaveArticle}
-          releaseFunc={this.handleReleaeArticle}
-        />
-      </>
+      <Mutation
+        mutation={CREATE_ARTICLE_MUTATION}
+        variables={{
+          title: this.state.title,
+          content: this.state.content,
+          image: this.state.image,
+          createAt: moment().format()
+        }}
+        refetchQueries={
+          [{query: ALL_ARTICLES_QUERY},{query: PAGINATION_ARTICLE_QUERY}]
+        }
+      >
+       {
+         (createArticle, { loading, error }) => {
+            return (
+              <>
+                <CreateArticleStyles>
+                  <Error error={error} />
+                  <Title placeholder="在這裡幫文章下個好標題..." title={this.state.title} titleChangeFunc={this.handleTitleChange}/>
+                  <MdEditor value={this.state.content} 
+                    onChange={(value) => { this.setState({
+                      content: value
+                    }); }} 
+                    onSave={(e) => { console.log(e);}}/>
+                </CreateArticleStyles>
+                <TagBar tags={this.state.tags} 
+                  addtagFunc={this.handleAddTag} 
+                  removetagFunc={this.handleremoveTag}
+                  saveFunc={async () => {
+                    const res = await createArticle();
+                    Router.push({
+                      pathname: '/',
+                      query: { id: res.data.createArticle.id }
+                    })
+                  }}
+                  releaseFunc={this.handleReleaeArticle}
+                />
+              </>
+            )
+         }
+       }
+      </Mutation>
     )
   }
 }

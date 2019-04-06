@@ -6,7 +6,7 @@ import Router from 'next/router';
 import Error from './ErrorMessage';
 import { resultKeyNameFromField } from 'apollo-utilities';
 import { ALL_ITEMS_QUERY } from './Items';
-import { PAGINATION_QUERY } from './/Pagination';
+import { PAGINATION_QUERY } from './Pagination';
 
 const CREATE_ITEM_MUTATION = gql`
   mutation CREATE_ITEM_MUTATION(

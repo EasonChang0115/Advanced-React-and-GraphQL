@@ -1,7 +1,7 @@
 {
-  "name": "sick-fits-frontend",
+  "name": "goodjason-blog-frontend",
   "version": "1.0.0",
-  "description": "Sick Fits! An example React, GraphQL, Next and Apollo",
+  "description": "Lit goodjason! A project React, GraphQL, Next and Apollo",
   "main": "index.js",
   "scripts": {
     "dev": "next -p 7777",
@@ -51,7 +51,8 @@
     "highlight.js": "^9.13.1",
     "jest": "^23.6.0",
     "jest-transform-graphql": "^2.1.0",
-    "marked": "^0.5.2"
+    "marked": "^0.5.2",
+    "moment": "^2.24.0"
   },
   "jest": {
     "setupTestFrameworkScriptFile": "<rootDir>/jest.setup.js",
