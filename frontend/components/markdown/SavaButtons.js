@@ -25,8 +25,8 @@ const SavaButtonStyles = styled.div`
 `;
 const SavaButtons = (props) => (
   <SavaButtonStyles>
-    <button className="save-article-btn" onClick={props.saveArticleFunc}>儲存草稿</button>
-    <button className="release-article-btn" onClick={props.releaseArticleFunc}>發布文章</button>
+    <button disabled={props.disabled} className="save-article-btn" onClick={props.saveArticleFunc}>儲存草稿</button>
+    <button disabled={props.disabled} className="release-article-btn" onClick={props.releaseArticleFunc}>發布文章</button>
   </SavaButtonStyles>
 )
 

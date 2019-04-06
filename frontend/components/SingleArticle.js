@@ -36,7 +36,6 @@ const SINGLE_ARTICLE_QUERY = gql`
 
 class SingleArticle extends Component {
   render() {
-    let string = "# Three.js 製作 3D 特效網頁（入門）\n\n\n\n\n\n### Three.js介紹\n\n* 在網頁上製作3D的函式庫\n\n* 基於 WebGL \n\n* 範例：互動專輯、品牌網頁、互動MV、視覺藝術\n\n![](https://i.imgur.com/J295JDf.jpg)\n\n\n\n---\n\n";
     return (
       <Query 
         query={ SINGLE_ARTICLE_QUERY } 

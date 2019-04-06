@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Router from 'next/router';
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 import styled from 'styled-components';
@@ -6,7 +7,6 @@ import moment from 'moment';
 import { ALL_ARTICLES_QUERY } from './Articles';
 import { PAGINATION_ARTICLE_QUERY } from './ArticlePagination';
 
-import Router from 'next/router';
 import Error from './ErrorMessage';
 import Title from './markdown/Title';
 import TagBar from './markdown/TagBar';
@@ -33,6 +33,21 @@ const CREATE_ARTICLE_MUTATION = gql`
 const CreateArticleStyles = styled.div`
   background-color: white;
   border: 1px solid #E5E5E5;
+  position: relative;
+  .loading-mock {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.4);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    &.active {
+      display: flex;
+    }
+  }
 `;
 
 class CreateArticle extends Component {
@@ -93,10 +108,14 @@ class CreateArticle extends Component {
                       content: value
                     }); }} 
                     onSave={(e) => { console.log(e);}}/>
+                  <div className={loading ? 'loading-mock active' : 'loading-mock'}>
+                    <img src="/static/loading.svg" alt="loading" width="200px"/>
+                  </div>
                 </CreateArticleStyles>
                 <TagBar tags={this.state.tags} 
                   addtagFunc={this.handleAddTag} 
                   removetagFunc={this.handleremoveTag}
+                  disabled = {loading}
                   saveFunc={async () => {
                     const res = await createArticle();
                     Router.push({
@@ -116,3 +135,4 @@ class CreateArticle extends Component {
 }
 
 export default CreateArticle;
+export { CREATE_ARTICLE_MUTATION };
