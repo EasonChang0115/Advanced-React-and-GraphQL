@@ -32,8 +32,15 @@ type Query {
   itemsConnection(where: ItemWhereInput): ItemConnection!
   
   article(where: ArticleWhereUniqueInput!): Article
-  articles(where: ArticleWhereInput, orderBy: ArticleOrderByInput, skip: Int, first: Int): [Article]!
+  articles(where: ArticleWhereInput, orderBy: ArticleOrderByInput, skip: Int, first: Int, last: Int): [Article]!
   articlesConnection(where: ArticleWhereInput): ArticleConnection!
+  pageArticles(id: ID!): PageArticle
 
   me: User
+}
+
+type PageArticle {
+  preArticle: Article
+  nowArticle: Article
+  nextArticle: Article
 }

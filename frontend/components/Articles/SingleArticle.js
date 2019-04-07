@@ -5,6 +5,7 @@ import Error from '../ErrorMessage';
 import styled from 'styled-components';
 import Head from 'next/head';
 import MdView from '../markdown/MdView';
+import PreNextButtons from './PreNextButtons';
 
 const SingleArticleStyles = styled.div`
   min-height: 100%;
@@ -34,17 +35,39 @@ const SINGLE_ARTICLE_QUERY = gql`
   }
 `;
 
+const SINGLE_PAGE_ARTICLE_QUERY = gql`
+  query SINGLE_PAGE_ARTICLE_QUERY($id: ID!) {
+    pageArticles(id: $id) {
+      preArticle {
+        id
+        title
+      }
+      nowArticle {
+        id
+        title
+        content
+        image
+      }
+      nextArticle {
+        id
+        title
+      }
+    }
+  }
+`;
+
 class SingleArticle extends Component {
   render() {
     return (
       <Query 
-        query={ SINGLE_ARTICLE_QUERY }
+        query={ SINGLE_PAGE_ARTICLE_QUERY }
         variables={{ id: this.props.id }}>{
           ({ data, error, loading }) => {
             if (error) return <Error error={ error } />
             if (loading) return <p>Loading....</p>
-            if (!data.article) return <p>No item found for { this.props.id }</p>
-            const article = data.article;
+            if (!data.pageArticles) return <p>No item found for { this.props.id }</p>
+            console.log(data.pageArticles);
+            const article = data.pageArticles.nowArticle;
             return (
             <SingleArticleStyles>
               <Head>
@@ -55,6 +78,7 @@ class SingleArticle extends Component {
               <article className="details">
                 <MdView value={ article.content } />
               </article>
+              <PreNextButtons prev={data.pageArticles.preArticle} next={data.pageArticles.nextArticle}/>
             </SingleArticleStyles>)
            }
         }
@@ -64,3 +88,4 @@ class SingleArticle extends Component {
 }
 
 export default SingleArticle;
+export { SINGLE_ARTICLE_QUERY, SINGLE_PAGE_ARTICLE_QUERY};

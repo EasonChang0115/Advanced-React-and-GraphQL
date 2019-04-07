@@ -11,6 +11,7 @@ const theme = {
   releaseColor: '#f77fee',
   black: '#393939',
   grey: '#3A3A3A',
+  smallgrey: '#969696',
   lightgrey: '#E1E1E1',
   offWhite: '#EDEDED',
   maxWidth: '1080px',
@@ -36,6 +37,7 @@ const Inner = styled.div`
 // css normalize
 injectGlobal`
   @import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700,700i');
+  @import url('https://fonts.googleapis.com/css?family=Noto+Sans+TC:300,400,500,700&subset=chinese-traditional');
   html {
     box-sizing: border-box;
     font-size: 10px;
@@ -49,7 +51,7 @@ injectGlobal`
     margin: 0;
     font-size: 1.6rem;
     line-height: 2;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto', 'Noto Sans TC',sans-serif;
     height: 100%;
     div#__next {
       height: 100%;
