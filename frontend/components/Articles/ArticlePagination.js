@@ -1,8 +1,8 @@
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import Link from 'next/link';
-import PaginationStyles from './styles/PaginationStyles';
-import { perPage } from '../config';
+import PaginationStyles from '../styles/PaginationStyles';
+import { perPage } from '../../config';
 
 
 const PAGINATION_ARTICLE_QUERY = gql`

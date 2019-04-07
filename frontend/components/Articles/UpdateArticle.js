@@ -1,28 +1,38 @@
 import React, { Component } from 'react';
 import Router from 'next/router';
-import { Mutation } from 'react-apollo';
+import { Mutation, Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import styled from 'styled-components';
 import moment from 'moment';
-import { ALL_ARTICLES_QUERY } from './Articles';
-import { PAGINATION_ARTICLE_QUERY } from './ArticlePagination';
 
-import Error from './ErrorMessage';
-import Title from './markdown/Title';
-import TagBar from './markdown/TagBar';
-import MdEditor from './markdown/MdEditor';
+import Error from '../ErrorMessage';
+import Title from '../markdown/Title';
+import TagBar from '../markdown/TagBar';
+import MdEditor from '../markdown/MdEditor';
 
-const CREATE_ARTICLE_MUTATION = gql`
-  mutation CREATE_ARTICLE_MUTATION(
+
+const SINGLE_ARTICLE_QUERY = gql`
+  query SINGLE_ARTICLE_QUERY($id: ID!) {
+    article(where: { id: $id }) {
+      id
+      title
+      content
+      image
+    }
+  }
+`;
+
+const UPDATE_ARTICLE_MUTATION = gql`
+  mutation UPDATE_ARTICLE_MUTATION(
+    $id: ID!
     $title: String
     $content: String
-    $createAt: String!
     $image: String
   ) {
-    createArticle(
+    updateArticle(
+      id: $id
       title: $title
       content: $content
-      createAt: $createAt
       image: $image
     ) {
       id
@@ -30,9 +40,9 @@ const CREATE_ARTICLE_MUTATION = gql`
   }
 `;
 
-const CreateArticleStyles = styled.div`
+const UpdateArticleStyles = styled.div`
   background-color: white;
-  border: 1px solid #E5E5E5;
+  border: 1px solid ${props => props.theme.mainColor};
   position: relative;
   .loading-mock {
     position: absolute;
@@ -50,12 +60,15 @@ const CreateArticleStyles = styled.div`
   }
 `;
 
-class CreateArticle extends Component {
-  state = {
-    title: '',
-    content: '',
-    image: '',
-    tags: ['jacascript']
+class UpdateArticleMutation extends Component {
+  constructor (props) {
+    super(props);
+    this.state = {
+      title: this.props.article.title,
+      content: this.props.article.content,
+      image: this.props.article.image,
+      tags: ['jacascript']
+    }
   }
   handleTitleChange = e => {
     this.setState({
@@ -85,54 +98,62 @@ class CreateArticle extends Component {
   render() {
     return (
       <Mutation
-        mutation={CREATE_ARTICLE_MUTATION}
+        mutation={UPDATE_ARTICLE_MUTATION}
         variables={{
+          id: this.props.article.id,
           title: this.state.title,
           content: this.state.content,
           image: this.state.image,
-          createAt: moment().format()
         }}
-        refetchQueries={
-          [{query: ALL_ARTICLES_QUERY},{query: PAGINATION_ARTICLE_QUERY}]
-        }
       >
-       {
-         (createArticle, { loading, error }) => {
+      {
+        (updateArticle, { loading, error }) => {
             return (
               <>
-                <CreateArticleStyles>
+                <UpdateArticleStyles>
                   <Error error={error} />
                   <Title placeholder="在這裡幫文章下個好標題..." title={this.state.title} titleChangeFunc={this.handleTitleChange}/>
                   <MdEditor value={this.state.content} 
-                    onChange={(value) => { this.setState({
+                    onChange={(value) => {this.setState({
                       content: value
-                    }); }} 
-                    onSave={(e) => { console.log(e);}}/>
+                    }); }}
+                  />
                   <div className={loading ? 'loading-mock active' : 'loading-mock'}>
                     <img src="/static/loading.svg" alt="loading" width="200px"/>
                   </div>
-                </CreateArticleStyles>
+                </UpdateArticleStyles>
                 <TagBar tags={this.state.tags} 
                   addtagFunc={this.handleAddTag} 
                   removetagFunc={this.handleremoveTag}
                   disabled = {loading}
                   saveFunc={async () => {
-                    const res = await createArticle();
+                    const res = await updateArticle();
                     Router.push({
                       pathname: '/',
-                      query: { id: res.data.createArticle.id }
+                      query: { id: res.data.updateArticle.id }
                     })
                   }}
                   releaseFunc={this.handleReleaeArticle}
                 />
               </>
             )
-         }
-       }
+        }
+      }
       </Mutation>
     )
   }
 }
 
-export default CreateArticle;
+const UpdateArticleQuery = (props) => (
+<Query query={SINGLE_ARTICLE_QUERY} variables={{id: props.id}}>
+{
+  ({data, loading}) => {
+    if (loading) return <p>loading....</p>;
+    if (!data.article) return <p>No article found for ID {props.id}</p>;
+    return <UpdateArticleMutation article={data.article}/>
+  }
+}
+</Query>)
+
+export default UpdateArticleQuery;
 export { CREATE_ARTICLE_MUTATION };

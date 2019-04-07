@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 
-import ArticleCardStyle from './styles/ArticleCard';
+import ArticleCardStyle from '../styles/ArticleCard';
 
 let LinkTag = props => (
   <Link prefetch href={{
@@ -42,7 +42,7 @@ class ArticleCard extends Component {
         </div>
       </ArticleCardStyle>
     );
-  }
+  };
 }
 
 export default ArticleCard;

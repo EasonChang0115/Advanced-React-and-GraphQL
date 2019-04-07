@@ -1,6 +1,6 @@
-import Articles from '../components/Articles';
+import Articles from '../components/Articles/Articles';
 import HomeLayout from '../components/styles/HomeLayout';
-import SingleArticle from '../components/SingleArticle';
+import SingleArticle from '../components/Articles/SingleArticle';
 
 let Home = props => {
 	return (

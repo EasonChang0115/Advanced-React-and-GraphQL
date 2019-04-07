@@ -104,7 +104,7 @@ class TagBar extends Component {
       this.props.addtagFunc(this.state.inputValue);
       this.setState({
         inputValue: ''
-      })
+      });
     }
   }
   render() {
@@ -129,8 +129,8 @@ class TagBar extends Component {
           <SavaButtons disabled={this.props.disabled} saveArticleFunc={this.props.saveFunc} releaseArticleFunc={this.props.releaseFunc}/>
         </div>
       </TagBarStyles>
-    )
-  }
+    );
+  };
 }
 
 export default TagBar;

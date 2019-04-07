@@ -21,6 +21,6 @@ const Title = props => (
   <TitleStyles>
     <input type="text" value={props.title} placeholder={props.placeholder} onChange={props.titleChangeFunc}/>
   </TitleStyles>
-)
+);
 
 export default Title;

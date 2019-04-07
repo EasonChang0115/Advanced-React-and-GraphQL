@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
-import Error from './ErrorMessage';
+import Error from '../ErrorMessage';
 import styled from 'styled-components';
 import Head from 'next/head';
-import MdView from './markdown/MdView';
+import MdView from '../markdown/MdView';
 
 const SingleArticleStyles = styled.div`
   min-height: 100%;
@@ -38,7 +38,7 @@ class SingleArticle extends Component {
   render() {
     return (
       <Query 
-        query={ SINGLE_ARTICLE_QUERY } 
+        query={ SINGLE_ARTICLE_QUERY }
         variables={{ id: this.props.id }}>{
           ({ data, error, loading }) => {
             if (error) return <Error error={ error } />

@@ -17,8 +17,8 @@ class MdView extends Component {
           />
         </div>
       </MdViewStyles>
-    )
-  }
+    );
+  };
 }
 
 export default MdView;

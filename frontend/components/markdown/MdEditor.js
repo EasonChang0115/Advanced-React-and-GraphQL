@@ -187,8 +187,8 @@ class MdEditor extends Component {
           </div>
         </div>
       </MdEditorStyles>
-    )
-  }
+    );
+  };
 }
 
-export default MdEditor
+export default MdEditor;

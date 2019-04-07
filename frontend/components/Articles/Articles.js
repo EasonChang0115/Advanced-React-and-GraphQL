@@ -4,7 +4,7 @@ import gql from 'graphql-tag';
 import styled from 'styled-components';
 import ArticleCard from './ArticleCard';
 import Pagination from './ArticlePagination';
-import { perPage } from '../config';
+import { perPage } from '../../config';
 
 const ALL_ARTICLES_QUERY = gql`
   query ALL_ARTICLES_QUERY($skip: Int = 0, $first: Int = ${perPage}) {
@@ -52,7 +52,7 @@ class Articles extends Component {
           <Pagination page={this.props.page} />
         </>
     );
-  }
+  };
 }
 
 export default Articles;
