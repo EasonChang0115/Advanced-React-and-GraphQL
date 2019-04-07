@@ -16,28 +16,6 @@ const Mutations = {
     );
     return item;
   },
-  async createArticle(parent, args, ctx, info) {
-    // TODO: Check if they are logged in
-    const { userId } = ctx.request;
-    if (!userId) {
-      throw new Error('You must be signed in soooon');
-    }
-    const datas = {...args};
-    const article = await ctx.db.mutation.createArticle(
-      {
-        data: {
-          ...datas,
-          author: {
-            connect: {
-              id: userId
-            }
-          }
-        }
-      },
-      info
-    );
-    return article;
-  },
   updateItem(parent, args, ctx, info) {
     // first take a copy of the udates
     const updates = {...args};
@@ -60,6 +38,47 @@ const Mutations = {
     // 3. Delete it!
     return ctx.db.mutation.deleteItem({ where }, info);
   },
+  // Articles Mutation
+  async createArticle(parent, args, ctx, info) {
+    // TODO: Check if they are logged in
+    const { userId } = ctx.request;
+    if (!userId) {
+      throw new Error('You must be signed in soooon');
+    }
+    const datas = {...args};
+    const article = await ctx.db.mutation.createArticle(
+      {
+        data: {
+          ...datas,
+          author: {
+            connect: {
+              id: userId
+            }
+          }
+        }
+      },
+      info
+    );
+    return article;
+  },
+  updateArticle(parent, args, ctx, info) {
+    const { userId } = ctx.request;
+    if (!userId) {
+      throw new Error('You must be signed in soooon');
+    }
+    // first take a copy of the udates
+    const updates = {...args};
+    // remove the ID from updates
+    delete updates.id;
+    // run update method
+    return ctx.db.mutation.updateArticle({
+      data: updates,
+      where : {
+        id: args.id
+      },
+    }, info);
+  },
+  // Sign in/out
   async signup(parent, args, ctx, info) {
     // lowercase their email
     args.email = args.email.toLowerCase();
