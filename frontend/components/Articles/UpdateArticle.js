@@ -3,13 +3,12 @@ import Router from 'next/router';
 import { Mutation, Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import styled from 'styled-components';
-import moment from 'moment';
 
 import Error from '../ErrorMessage';
 import Title from '../markdown/Title';
 import TagBar from '../markdown/TagBar';
 import MdEditor from '../markdown/MdEditor';
-
+import Loading from '../Loading';
 
 const SINGLE_ARTICLE_QUERY = gql`
   query SINGLE_ARTICLE_QUERY($id: ID!) {
@@ -44,20 +43,6 @@ const UpdateArticleStyles = styled.div`
   background-color: white;
   border: 1px solid ${props => props.theme.mainColor};
   position: relative;
-  .loading-mock {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(255, 255, 255, 0.4);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    &.active {
-      display: flex;
-    }
-  }
 `;
 
 class UpdateArticleMutation extends Component {
@@ -118,9 +103,7 @@ class UpdateArticleMutation extends Component {
                       content: value
                     }); }}
                   />
-                  <div className={loading ? 'loading-mock active' : 'loading-mock'}>
-                    <img src="/static/loading.svg" alt="loading" width="200px"/>
-                  </div>
+                  <Loading loading={loading} />
                 </UpdateArticleStyles>
                 <TagBar tags={this.state.tags} 
                   addtagFunc={this.handleAddTag} 
@@ -148,7 +131,7 @@ const UpdateArticleQuery = (props) => (
 <Query query={SINGLE_ARTICLE_QUERY} variables={{id: props.id}}>
 {
   ({data, loading}) => {
-    if (loading) return <p>loading....</p>;
+    if (loading) return <Loading loading={loading} />;
     if (!data.article) return <p>No article found for ID {props.id}</p>;
     return <UpdateArticleMutation article={data.article}/>
   }

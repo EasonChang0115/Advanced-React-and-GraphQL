@@ -11,6 +11,7 @@ import Error from '../ErrorMessage';
 import Title from '../markdown/Title';
 import TagBar from '../markdown/TagBar';
 import MdEditor from '../markdown/MdEditor';
+import Loading from '../Loading';
 
 const CREATE_ARTICLE_MUTATION = gql`
   mutation CREATE_ARTICLE_MUTATION(
@@ -34,20 +35,6 @@ const CreateArticleStyles = styled.div`
   background-color: white;
   border: 1px solid #E5E5E5;
   position: relative;
-  .loading-mock {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(255, 255, 255, 0.4);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    &.active {
-      display: flex;
-    }
-  }
 `;
 
 class CreateArticle extends Component {
@@ -108,9 +95,7 @@ class CreateArticle extends Component {
                       content: value
                     }); }}
                   />
-                  <div className={loading ? 'loading-mock active' : 'loading-mock'}>
-                    <img src="/static/loading.svg" alt="loading" width="200px"/>
-                  </div>
+                  <Loading loading={loading} />
                 </CreateArticleStyles>
                 <TagBar tags={this.state.tags} 
                   addtagFunc={this.handleAddTag} 
