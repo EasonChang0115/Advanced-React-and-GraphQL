@@ -8,8 +8,7 @@ import MdView from '../markdown/MdView';
 import PreNextButtons from './PreNextButtons';
 
 const SingleArticleStyles = styled.div`
-  min-height: 100%;
-  margin: 2rem auto;
+  margin: 0;
   box-shadow: ${props => props.theme.bs};
   display: flex;
   flex-direction: column;
@@ -66,7 +65,6 @@ class SingleArticle extends Component {
             if (error) return <Error error={ error } />
             if (loading) return <p>Loading....</p>
             if (!data.pageArticles) return <p>No item found for { this.props.id }</p>
-            console.log(data.pageArticles);
             const article = data.pageArticles.nowArticle;
             return (
             <SingleArticleStyles>

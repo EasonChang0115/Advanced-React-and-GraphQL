@@ -5,6 +5,7 @@ const PreNextButtonsStyles = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-bottom: 2rem;
   a {
     margin: 0 4px;
     padding: 4px 14px;
