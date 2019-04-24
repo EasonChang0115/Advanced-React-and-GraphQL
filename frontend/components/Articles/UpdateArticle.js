@@ -41,7 +41,7 @@ const UPDATE_ARTICLE_MUTATION = gql`
 
 const UpdateArticleStyles = styled.div`
   background-color: white;
-  border: 1px solid ${props => props.theme.mainColor};
+  border: 1px solid #69696969;
   position: relative;
 `;
 
@@ -78,6 +78,9 @@ class UpdateArticleMutation extends Component {
     console.log('save article');
   }
   handleReleaeArticle = () => {
+    console.log('release article');
+  }
+  handleDeleteArticle = () => {
     console.log('release article');
   }
   render() {
@@ -117,6 +120,7 @@ class UpdateArticleMutation extends Component {
                     })
                   }}
                   releaseFunc={this.handleReleaeArticle}
+                  deleteFunc={this.handleDeleteArticle}
                 />
               </>
             )

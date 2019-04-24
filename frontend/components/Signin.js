@@ -36,8 +36,9 @@ class Signin extends Component {
         (signin, { error, loading }) => (
           <Form method="post" onSubmit={async e => {
             e.preventDefault();
-            await signin();
-            this.setState({ email: '', password: '' })
+            let user = await signin();
+            localStorage.setItem('userId', user.data.signin.id);
+            this.setState({ email: '', password: '' });
           }}>
             <fieldset disabled={loading} aria-busy={loading}>
               <h2>Sign into your account</h2>

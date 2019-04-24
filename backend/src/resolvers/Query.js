@@ -10,7 +10,19 @@ const Query = {
   articles: forwardTo('db'),
   articlesConnection: forwardTo('db'),
   async pageArticles(parent, args, ctx, info) {
-    let nowArticle = await ctx.db.query.article({ where: { id: args.id } });
+    let nowArticle = await ctx.db.query.article({where: { id: args.id }},
+      `{
+        id
+        title
+        content
+        image
+        createAt
+        author {
+          id
+          name
+        }
+      }`
+    );
     if (!nowArticle) {
       throw new Error(`No such article found for ID ${args.id}`);
     }

@@ -22,8 +22,8 @@ const Nav = () => (
               <Link href="/orders">
                 <a>Orders</a>
               </Link>
-              <Link href="/me">
-                <a>關於我</a>
+              <Link href="/article">
+                <a>新增文章</a>
               </Link>
               <Signout></Signout>
             </>
@@ -31,9 +31,14 @@ const Nav = () => (
         }
         {
           !me &&(
-            <Link href="/signup">
-              <a>Sign In</a>
-            </Link>
+            <>
+              <Link href="/me">
+                <a>關於我</a>
+              </Link>
+              <Link href="/signup">
+                <a>Sign In</a>
+              </Link>
+            </>
           )
         }
       </NavStyles>

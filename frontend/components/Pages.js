@@ -9,6 +9,7 @@ const theme = {
   mainColor: '#083884',
   saveColor: '#7bc67b',
   releaseColor: '#f77fee',
+  deleteColor: '#f36a7b',
   black: '#393939',
   grey: '#3A3A3A',
   smallgrey: '#969696',

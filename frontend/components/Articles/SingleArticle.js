@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Link from 'next/link';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
 import Error from '../ErrorMessage';
@@ -6,6 +7,7 @@ import styled from 'styled-components';
 import Head from 'next/head';
 import MdView from '../markdown/MdView';
 import PreNextButtons from './PreNextButtons';
+import moment from 'moment';
 
 const SingleArticleStyles = styled.div`
   margin: 0;
@@ -19,7 +21,23 @@ const SingleArticleStyles = styled.div`
     object-fit: cover;
   }
   .details {
-    margin: 3rem 1.5rem;
+    h1.title {
+      margin: 0;
+      color: #555555;
+      text-align: left;
+      padding: 0px 0.8rem;
+    }
+    .create-time {
+        font-size: 1.4rem;
+        color: #696969;
+        padding: 0px 0.8rem;
+        text-align: right;
+        .edit {
+          margin-left: 0.8rem;
+          color: ${props => props.theme.mainColor};
+        }
+      }
+    margin: 1.5rem 0 3rem 0;
     font-size: 2rem;
   }
 `;
@@ -30,6 +48,11 @@ const SINGLE_ARTICLE_QUERY = gql`
       title
       content
       image
+      createAt
+      author {
+        id
+        name
+      }
     }
   }
 `;
@@ -46,6 +69,11 @@ const SINGLE_PAGE_ARTICLE_QUERY = gql`
         title
         content
         image
+        createAt
+        author {
+          id
+          name
+        }
       }
       nextArticle {
         id
@@ -56,6 +84,14 @@ const SINGLE_PAGE_ARTICLE_QUERY = gql`
 `;
 
 class SingleArticle extends Component {
+  state = {
+    userId: null
+  }
+  componentDidMount() {
+    this.setState({
+      userId: localStorage.getItem('userId')
+    });
+  }
   render() {
     return (
       <Query 
@@ -66,6 +102,15 @@ class SingleArticle extends Component {
             if (loading) return <p>Loading....</p>
             if (!data.pageArticles) return <p>No item found for { this.props.id }</p>
             const article = data.pageArticles.nowArticle;
+            let editBlock = null;
+            if (this.state.userId && this.state.userId === article.author[0].id) {
+              editBlock = <Link href={{
+                  pathname: '/article',
+                  query: { id: article.id }
+                }}>
+                <a className="edit">編輯</a>
+              </Link>
+            }
             return (
             <SingleArticleStyles>
               <Head>
@@ -74,6 +119,13 @@ class SingleArticle extends Component {
               </Head>
               <img src={ article.image } alt={ article.title }/>
               <article className="details">
+                <h1 className="title">
+                  { article.title }
+                </h1>
+                <div className="create-time">
+                  { moment(article.createAt).format('YYYY-MM-DD HH:ss:mm') }
+                  { editBlock }
+                </div>
                 <MdView value={ article.content } />
               </article>
               <PreNextButtons prev={data.pageArticles.preArticle} next={data.pageArticles.nextArticle}/>

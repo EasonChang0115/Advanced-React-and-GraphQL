@@ -15,7 +15,9 @@ const HomeLayout = styled.div`
 		background-color: rgba(255, 0, 0, 0.1);
 	}
 	@media screen and (max-width: ${props => props.theme.mediaPad}){
-		grid-template-columns: 100%;
+		.articles-wrap {
+			width: 100%;
+		}
 		.sidebar-wrap {
 			display: none;
 		}

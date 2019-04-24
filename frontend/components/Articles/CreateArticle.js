@@ -42,7 +42,7 @@ class CreateArticle extends Component {
     title: '',
     content: '',
     image: '',
-    tags: ['jacascript']
+    tags: ['javascript']
   }
   handleTitleChange = e => {
     this.setState({
@@ -93,7 +93,7 @@ class CreateArticle extends Component {
                   <MdEditor value={this.state.content} 
                     onChange={(value) => { this.setState({
                       content: value
-                    }); }}
+                    });}}
                   />
                   <Loading loading={loading} />
                 </CreateArticleStyles>

@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import Nav from './Nav';
+import Router from 'next/router';
 import Link from 'next/link';
 import styled from 'styled-components';
-import Router from 'next/router';
 import NProgress from 'nprogress';
+import Nav from './Nav';
+import SearchInput from './SearchInput';
 
 Router.onRouteChangeStart = () => {
   NProgress.start();
@@ -60,6 +61,9 @@ const StyledHeader = styled.header`
 `;
 
 class Header extends Component {
+  state = {
+
+  }
   render() {
     return (
     <StyledHeader>

@@ -126,7 +126,11 @@ class TagBar extends Component {
                 onKeyDown={this.handleInputKeydown}/>
             </TagStyles>
           </ul>
-          <SavaButtons disabled={this.props.disabled} saveArticleFunc={this.props.saveFunc} releaseArticleFunc={this.props.releaseFunc}/>
+          <SavaButtons disabled={this.props.disabled} 
+            saveArticleFunc={this.props.saveFunc} 
+            releaseArticleFunc={this.props.releaseFunc}
+            deleteArticleFunc={this.props.deleteFunc}
+          />
         </div>
       </TagBarStyles>
     );
