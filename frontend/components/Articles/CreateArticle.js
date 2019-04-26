@@ -12,6 +12,7 @@ import Title from '../markdown/Title';
 import TagBar from '../markdown/TagBar';
 import MdEditor from '../markdown/MdEditor';
 import Loading from '../Loading';
+import SavaButtons from './SavaButtons';
 
 const CREATE_ARTICLE_MUTATION = gql`
   mutation CREATE_ARTICLE_MUTATION(
@@ -63,9 +64,6 @@ class CreateArticle extends Component {
       tags: newArray
     });
   }
-  handleSaveArticle = () => {
-    console.log('save article');
-  }
   handleReleaeArticle = () => {
     console.log('release article');
   }
@@ -100,15 +98,16 @@ class CreateArticle extends Component {
                 <TagBar tags={this.state.tags} 
                   addtagFunc={this.handleAddTag} 
                   removetagFunc={this.handleremoveTag}
-                  disabled = {loading}
-                  saveFunc={async () => {
+                />
+                <SavaButtons disabled={loading} 
+                  saveArticleFunc={async () => {
                     const res = await createArticle();
                     Router.push({
                       pathname: '/',
                       query: { id: res.data.createArticle.id }
-                    })
+                    });
                   }}
-                  releaseFunc={this.handleReleaeArticle}
+                  releaseArticleFunc={this.handleReleaeArticle}
                 />
               </>
             )

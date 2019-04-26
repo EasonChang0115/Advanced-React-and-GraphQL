@@ -9,6 +9,7 @@ import Title from '../markdown/Title';
 import TagBar from '../markdown/TagBar';
 import MdEditor from '../markdown/MdEditor';
 import Loading from '../Loading';
+import SavaButtons from './SavaButtons';
 
 const SINGLE_ARTICLE_QUERY = gql`
   query SINGLE_ARTICLE_QUERY($id: ID!) {
@@ -74,9 +75,6 @@ class UpdateArticleMutation extends Component {
       tags: newArray
     });
   }
-  handleSaveArticle = () => {
-    console.log('save article');
-  }
   handleReleaeArticle = () => {
     console.log('release article');
   }
@@ -108,10 +106,15 @@ class UpdateArticleMutation extends Component {
                   />
                   <Loading loading={loading} />
                 </UpdateArticleStyles>
-                <TagBar tags={this.state.tags} 
+                <TagBar
+                  articleID={this.props.article.id} 
+                  tags={this.state.tags} 
                   addtagFunc={this.handleAddTag} 
                   removetagFunc={this.handleremoveTag}
-                  disabled = {loading}
+                />
+                <SavaButtons 
+                  articleID={this.props.article.id} 
+                  disabled={loading} 
                   saveFunc={async () => {
                     const res = await updateArticle();
                     Router.push({
@@ -119,8 +122,7 @@ class UpdateArticleMutation extends Component {
                       query: { id: res.data.updateArticle.id }
                     })
                   }}
-                  releaseFunc={this.handleReleaeArticle}
-                  deleteFunc={this.handleDeleteArticle}
+                  releaseArticleFunc={this.handleReleaeArticle}
                 />
               </>
             )
@@ -143,4 +145,4 @@ const UpdateArticleQuery = (props) => (
 </Query>)
 
 export default UpdateArticleQuery;
-export { CREATE_ARTICLE_MUTATION };
+export { UPDATE_ARTICLE_MUTATION };

@@ -1,7 +1,11 @@
 import styled from 'styled-components';
+import DeleteArticleButton from './DeleteArticleButton'
+
 const SavaButtonStyles = styled.div`
   display: flex;
+  justify-content: flex-end;
   flex-shrink: 0;
+  margin-top: 1.5rem;
   button {
     border: none;
     outline: none;
@@ -30,11 +34,7 @@ const SavaButtons = props => (
   <SavaButtonStyles>
     <button disabled={props.disabled} className="save-article-btn" onClick={props.saveArticleFunc}>儲存草稿</button>
     <button disabled={props.disabled} className="release-article-btn" onClick={props.releaseArticleFunc}>發布文章</button>
-    <button disabled={props.disabled}
-      className="delete-article-btn" 
-      onClick={props.deleteArticleFunc}
-      style={{display: props.deleteArticleFunc ? 'block' : 'none'}}
-      >刪除文章</button>
+    <DeleteArticleButton disabled={props.disabled} deleteId={props.articleID}>刪除文章</DeleteArticleButton>
   </SavaButtonStyles>
 )
 

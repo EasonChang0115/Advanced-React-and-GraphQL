@@ -78,6 +78,15 @@ const Mutations = {
       },
     }, info);
   },
+  async deleteArticle(parent, args, ctx, info) {
+    const where = { id: args.id };
+    // 1. find the item
+    const article = await ctx.db.query.article({ where }, `{
+      id title }`);
+    // 2. Check if they own that item, on have the permissioins
+    // 3. Delete it!
+    return ctx.db.mutation.deleteArticle({ where }, info);
+  },
   // Sign in/out
   async signup(parent, args, ctx, info) {
     // lowercase their email

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import SavaButtons from './SavaButtons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const TagStyles = styled.li`
@@ -79,6 +78,7 @@ const TagBarStyles = styled.div`
     justify-content: space-between;
     align-items: center;
     margin-left: 16px;
+    padding-bottom: 8px;
     width: 100%;
     ul {
       list-style: none;
@@ -126,11 +126,6 @@ class TagBar extends Component {
                 onKeyDown={this.handleInputKeydown}/>
             </TagStyles>
           </ul>
-          <SavaButtons disabled={this.props.disabled} 
-            saveArticleFunc={this.props.saveFunc} 
-            releaseArticleFunc={this.props.releaseFunc}
-            deleteArticleFunc={this.props.deleteFunc}
-          />
         </div>
       </TagBarStyles>
     );
