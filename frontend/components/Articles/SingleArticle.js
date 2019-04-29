@@ -48,7 +48,7 @@ const SINGLE_ARTICLE_QUERY = gql`
       title
       content
       image
-      createAt
+      createdAt
       author {
         id
         name
@@ -69,7 +69,7 @@ const SINGLE_PAGE_ARTICLE_QUERY = gql`
         title
         content
         image
-        createAt
+        createdAt
         author {
           id
           name
@@ -123,7 +123,7 @@ class SingleArticle extends Component {
                   { article.title }
                 </h1>
                 <div className="create-time">
-                  { moment(article.createAt).format('YYYY-MM-DD HH:ss:mm') }
+                  { moment(article.createdAt).format('YYYY-MM-DD HH:ss:mm') }
                   { editBlock }
                 </div>
                 <MdView value={ article.content } />

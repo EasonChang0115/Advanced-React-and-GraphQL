@@ -4,9 +4,9 @@ import { ApolloProvider } from 'react-apollo';
 import widthData from '../lib/withData';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faAngleDoubleUp, faTags, faUndoAlt, faRedoAlt, faImage, faLink, faCode, faQuoteLeft } from '@fortawesome/free-solid-svg-icons';
+import { faAngleDoubleUp, faTags, faUndoAlt, faRedoAlt, faImage, faLink, faCode, faQuoteLeft, faCloudUploadAlt } from '@fortawesome/free-solid-svg-icons';
 
-library.add(faAngleDoubleUp, faTags, faUndoAlt, faRedoAlt, faImage, faLink, faCode, faQuoteLeft);
+library.add(faAngleDoubleUp, faTags, faUndoAlt, faRedoAlt, faImage, faLink, faCode, faQuoteLeft, faCloudUploadAlt);
 
 class MyApp extends App {
 	// Next 對 React 的 props生命週期 傳入做了控制

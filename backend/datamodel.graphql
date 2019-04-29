@@ -9,35 +9,47 @@ enum Permission {
   PERMISSIONUPDATE
 }
 
+type Category {
+  id: ID! @id
+}
+
+type tags {
+  id: ID! @id
+  tag: String
+}
+
 type Article {
-  id: ID! @unique
-  author: [User]
+  id: ID! @id
+  author: User
   title: String
+  category: Category
   image: String
   content: String
-  createAt: DateTime!
-  updatedAt: DateTime!
+  tags: [tags]
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
 }
 
 type User {
-  id: ID! @unique
+  id: ID! @id
   name: String!
   email: String! @unique
   password: String!
   resetToken: String
   resetTokenExpiry: Float
-  permission: [Permission]
+  permission: [Permission] @scalarList(strategy: RELATION)
   articles: [Article!]
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
 }
 
 type Item {
-  id: ID! @unique
+  id: ID! @id
   title: String!
   description: String!
   image: String
   largeImage: String
   price: Int!
-  # createAt: DateTime!
-  # updatedAt: DateTime!
-  # user: User!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
 }

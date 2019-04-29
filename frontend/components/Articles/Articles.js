@@ -16,7 +16,7 @@ const ALL_ARTICLES_QUERY = gql`
       }
       content
       image
-      createAt
+      createdAt
     }
   }
 `;

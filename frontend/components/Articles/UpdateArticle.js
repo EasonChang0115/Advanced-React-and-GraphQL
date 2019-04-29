@@ -56,6 +56,11 @@ class UpdateArticleMutation extends Component {
       tags: ['jacascript']
     }
   }
+  handleImageChange = url => {
+    this.setState({
+      image: url
+    });
+  }
   handleTitleChange = e => {
     this.setState({
       title: e.target.value
@@ -96,6 +101,7 @@ class UpdateArticleMutation extends Component {
         (updateArticle, { loading, error }) => {
             return (
               <>
+                <UploadImage imageUrl={this.state.image} setImageUrlFunc={this.handleImageChange} />
                 <UpdateArticleStyles>
                   <Error error={error} />
                   <Title placeholder="在這裡幫文章下個好標題..." title={this.state.title} titleChangeFunc={this.handleTitleChange}/>

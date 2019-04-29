@@ -1,11 +1,19 @@
 # source: https://us1.prisma.sh/eason-c56c5d/jaaaaason-fits/dev
-# timestamp: Fri Apr 05 2019 19:53:42 GMT+0800 (GMT+08:00)
+# timestamp: Mon Apr 29 2019 21:39:58 GMT+0800 (GMT+08:00)
 
 type AggregateArticle {
   count: Int!
 }
 
+type AggregateCategory {
+  count: Int!
+}
+
 type AggregateItem {
+  count: Int!
+}
+
+type Aggregatetags {
   count: Int!
 }
 
@@ -15,11 +23,13 @@ type AggregateUser {
 
 type Article implements Node {
   id: ID!
-  author(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  author: User
   title: String
+  category: Category
   image: String
   content: String
-  createAt: DateTime!
+  tags(where: tagsWhereInput, orderBy: tagsOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [tags!]
+  createdAt: DateTime!
   updatedAt: DateTime!
 }
 
@@ -38,8 +48,9 @@ input ArticleCreateInput {
   title: String
   image: String
   content: String
-  createAt: DateTime!
-  author: UserCreateManyWithoutArticlesInput
+  author: UserCreateOneWithoutArticlesInput
+  category: CategoryCreateOneInput
+  tags: tagsCreateManyInput
 }
 
 input ArticleCreateManyWithoutAuthorInput {
@@ -52,7 +63,8 @@ input ArticleCreateWithoutAuthorInput {
   title: String
   image: String
   content: String
-  createAt: DateTime!
+  category: CategoryCreateOneInput
+  tags: tagsCreateManyInput
 }
 
 """An edge in a connection."""
@@ -73,12 +85,10 @@ enum ArticleOrderByInput {
   image_DESC
   content_ASC
   content_DESC
-  createAt_ASC
-  createAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
   createdAt_ASC
   createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
 }
 
 type ArticlePreviousValues {
@@ -86,7 +96,7 @@ type ArticlePreviousValues {
   title: String
   image: String
   content: String
-  createAt: DateTime!
+  createdAt: DateTime!
   updatedAt: DateTime!
 }
 
@@ -259,28 +269,28 @@ input ArticleScalarWhereInput {
 
   """All values not ending with the given string."""
   content_not_ends_with: String
-  createAt: DateTime
+  createdAt: DateTime
 
   """All values that are not equal to given value."""
-  createAt_not: DateTime
+  createdAt_not: DateTime
 
   """All values that are contained in given list."""
-  createAt_in: [DateTime!]
+  createdAt_in: [DateTime!]
 
   """All values that are not contained in given list."""
-  createAt_not_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
 
   """All values less than the given value."""
-  createAt_lt: DateTime
+  createdAt_lt: DateTime
 
   """All values less than or equal the given value."""
-  createAt_lte: DateTime
+  createdAt_lte: DateTime
 
   """All values greater than the given value."""
-  createAt_gt: DateTime
+  createdAt_gt: DateTime
 
   """All values greater than or equal the given value."""
-  createAt_gte: DateTime
+  createdAt_gte: DateTime
   updatedAt: DateTime
 
   """All values that are not equal to given value."""
@@ -348,22 +358,21 @@ input ArticleUpdateInput {
   title: String
   image: String
   content: String
-  createAt: DateTime
-  author: UserUpdateManyWithoutArticlesInput
+  author: UserUpdateOneWithoutArticlesInput
+  category: CategoryUpdateOneInput
+  tags: tagsUpdateManyInput
 }
 
 input ArticleUpdateManyDataInput {
   title: String
   image: String
   content: String
-  createAt: DateTime
 }
 
 input ArticleUpdateManyMutationInput {
   title: String
   image: String
   content: String
-  createAt: DateTime
 }
 
 input ArticleUpdateManyWithoutAuthorInput {
@@ -387,7 +396,8 @@ input ArticleUpdateWithoutAuthorDataInput {
   title: String
   image: String
   content: String
-  createAt: DateTime
+  category: CategoryUpdateOneInput
+  tags: tagsUpdateManyInput
 }
 
 input ArticleUpdateWithWhereUniqueWithoutAuthorInput {
@@ -570,28 +580,28 @@ input ArticleWhereInput {
 
   """All values not ending with the given string."""
   content_not_ends_with: String
-  createAt: DateTime
+  createdAt: DateTime
 
   """All values that are not equal to given value."""
-  createAt_not: DateTime
+  createdAt_not: DateTime
 
   """All values that are contained in given list."""
-  createAt_in: [DateTime!]
+  createdAt_in: [DateTime!]
 
   """All values that are not contained in given list."""
-  createAt_not_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
 
   """All values less than the given value."""
-  createAt_lt: DateTime
+  createdAt_lt: DateTime
 
   """All values less than or equal the given value."""
-  createAt_lte: DateTime
+  createdAt_lte: DateTime
 
   """All values greater than the given value."""
-  createAt_gt: DateTime
+  createdAt_gt: DateTime
 
   """All values greater than or equal the given value."""
-  createAt_gte: DateTime
+  createdAt_gte: DateTime
   updatedAt: DateTime
 
   """All values that are not equal to given value."""
@@ -614,9 +624,11 @@ input ArticleWhereInput {
 
   """All values greater than or equal the given value."""
   updatedAt_gte: DateTime
-  author_every: UserWhereInput
-  author_some: UserWhereInput
-  author_none: UserWhereInput
+  author: UserWhereInput
+  category: CategoryWhereInput
+  tags_every: tagsWhereInput
+  tags_some: tagsWhereInput
+  tags_none: tagsWhereInput
 }
 
 input ArticleWhereUniqueInput {
@@ -628,6 +640,148 @@ type BatchPayload {
   count: Long!
 }
 
+type Category implements Node {
+  id: ID!
+}
+
+"""A connection to a list of items."""
+type CategoryConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [CategoryEdge]!
+  aggregate: AggregateCategory!
+}
+
+input CategoryCreateInput {
+  id: ID
+}
+
+input CategoryCreateOneInput {
+  create: CategoryCreateInput
+  connect: CategoryWhereUniqueInput
+}
+
+"""An edge in a connection."""
+type CategoryEdge {
+  """The item at the end of the edge."""
+  node: Category!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum CategoryOrderByInput {
+  id_ASC
+  id_DESC
+}
+
+type CategoryPreviousValues {
+  id: ID!
+}
+
+type CategorySubscriptionPayload {
+  mutation: MutationType!
+  node: Category
+  updatedFields: [String!]
+  previousValues: CategoryPreviousValues
+}
+
+input CategorySubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CategorySubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CategorySubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CategorySubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: CategoryWhereInput
+}
+
+input CategoryUpdateOneInput {
+  create: CategoryCreateInput
+  connect: CategoryWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+}
+
+input CategoryWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CategoryWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CategoryWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CategoryWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+}
+
+input CategoryWhereUniqueInput {
+  id: ID
+}
+
 scalar DateTime
 
 type Item implements Node {
@@ -637,6 +791,8 @@ type Item implements Node {
   image: String
   largeImage: String
   price: Int!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 """A connection to a list of items."""
@@ -680,10 +836,10 @@ enum ItemOrderByInput {
   largeImage_DESC
   price_ASC
   price_DESC
-  updatedAt_ASC
-  updatedAt_DESC
   createdAt_ASC
   createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
 }
 
 type ItemPreviousValues {
@@ -693,6 +849,8 @@ type ItemPreviousValues {
   image: String
   largeImage: String
   price: Int!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type ItemSubscriptionPayload {
@@ -981,6 +1139,50 @@ input ItemWhereInput {
 
   """All values greater than or equal the given value."""
   price_gte: Int
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
 }
 
 input ItemWhereUniqueInput {
@@ -997,21 +1199,30 @@ type Mutation {
   createArticle(data: ArticleCreateInput!): Article!
   createUser(data: UserCreateInput!): User!
   createItem(data: ItemCreateInput!): Item!
+  createtags(data: tagsCreateInput!): tags!
+  createCategory(data: CategoryCreateInput!): Category!
   updateArticle(data: ArticleUpdateInput!, where: ArticleWhereUniqueInput!): Article
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateItem(data: ItemUpdateInput!, where: ItemWhereUniqueInput!): Item
+  updatetags(data: tagsUpdateInput!, where: tagsWhereUniqueInput!): tags
   deleteArticle(where: ArticleWhereUniqueInput!): Article
   deleteUser(where: UserWhereUniqueInput!): User
   deleteItem(where: ItemWhereUniqueInput!): Item
+  deletetags(where: tagsWhereUniqueInput!): tags
+  deleteCategory(where: CategoryWhereUniqueInput!): Category
   upsertArticle(where: ArticleWhereUniqueInput!, create: ArticleCreateInput!, update: ArticleUpdateInput!): Article!
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   upsertItem(where: ItemWhereUniqueInput!, create: ItemCreateInput!, update: ItemUpdateInput!): Item!
+  upserttags(where: tagsWhereUniqueInput!, create: tagsCreateInput!, update: tagsUpdateInput!): tags!
   updateManyArticles(data: ArticleUpdateManyMutationInput!, where: ArticleWhereInput): BatchPayload!
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
   updateManyItems(data: ItemUpdateManyMutationInput!, where: ItemWhereInput): BatchPayload!
+  updateManyTagses(data: tagsUpdateManyMutationInput!, where: tagsWhereInput): BatchPayload!
   deleteManyArticles(where: ArticleWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
   deleteManyItems(where: ItemWhereInput): BatchPayload!
+  deleteManyTagses(where: tagsWhereInput): BatchPayload!
+  deleteManyCategories(where: CategoryWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -1054,12 +1265,18 @@ type Query {
   articles(where: ArticleWhereInput, orderBy: ArticleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Article]!
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   items(where: ItemWhereInput, orderBy: ItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Item]!
+  tagses(where: tagsWhereInput, orderBy: tagsOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [tags]!
+  categories(where: CategoryWhereInput, orderBy: CategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Category]!
   article(where: ArticleWhereUniqueInput!): Article
   user(where: UserWhereUniqueInput!): User
   item(where: ItemWhereUniqueInput!): Item
+  tags(where: tagsWhereUniqueInput!): tags
+  category(where: CategoryWhereUniqueInput!): Category
   articlesConnection(where: ArticleWhereInput, orderBy: ArticleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ArticleConnection!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
   itemsConnection(where: ItemWhereInput, orderBy: ItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ItemConnection!
+  tagsesConnection(where: tagsWhereInput, orderBy: tagsOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): tagsConnection!
+  categoriesConnection(where: CategoryWhereInput, orderBy: CategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CategoryConnection!
 
   """Fetches an object given its ID"""
   node(
@@ -1072,106 +1289,65 @@ type Subscription {
   article(where: ArticleSubscriptionWhereInput): ArticleSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
   item(where: ItemSubscriptionWhereInput): ItemSubscriptionPayload
+  tags(where: tagsSubscriptionWhereInput): tagsSubscriptionPayload
+  category(where: CategorySubscriptionWhereInput): CategorySubscriptionPayload
 }
 
-type User implements Node {
+type tags implements Node {
   id: ID!
-  name: String!
-  email: String!
-  password: String!
-  resetToken: String
-  resetTokenExpiry: Float
-  permission: [Permission!]!
-  articles(where: ArticleWhereInput, orderBy: ArticleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Article!]
+  tag: String
 }
 
 """A connection to a list of items."""
-type UserConnection {
+type tagsConnection {
   """Information to aid in pagination."""
   pageInfo: PageInfo!
 
   """A list of edges."""
-  edges: [UserEdge]!
-  aggregate: AggregateUser!
+  edges: [tagsEdge]!
+  aggregate: Aggregatetags!
 }
 
-input UserCreateInput {
+input tagsCreateInput {
   id: ID
-  name: String!
-  email: String!
-  password: String!
-  resetToken: String
-  resetTokenExpiry: Float
-  permission: UserCreatepermissionInput
-  articles: ArticleCreateManyWithoutAuthorInput
+  tag: String
 }
 
-input UserCreateManyWithoutArticlesInput {
-  create: [UserCreateWithoutArticlesInput!]
-  connect: [UserWhereUniqueInput!]
-}
-
-input UserCreatepermissionInput {
-  set: [Permission!]
-}
-
-input UserCreateWithoutArticlesInput {
-  id: ID
-  name: String!
-  email: String!
-  password: String!
-  resetToken: String
-  resetTokenExpiry: Float
-  permission: UserCreatepermissionInput
+input tagsCreateManyInput {
+  create: [tagsCreateInput!]
+  connect: [tagsWhereUniqueInput!]
 }
 
 """An edge in a connection."""
-type UserEdge {
+type tagsEdge {
   """The item at the end of the edge."""
-  node: User!
+  node: tags!
 
   """A cursor for use in pagination."""
   cursor: String!
 }
 
-enum UserOrderByInput {
+enum tagsOrderByInput {
   id_ASC
   id_DESC
-  name_ASC
-  name_DESC
-  email_ASC
-  email_DESC
-  password_ASC
-  password_DESC
-  resetToken_ASC
-  resetToken_DESC
-  resetTokenExpiry_ASC
-  resetTokenExpiry_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  createdAt_ASC
-  createdAt_DESC
+  tag_ASC
+  tag_DESC
 }
 
-type UserPreviousValues {
+type tagsPreviousValues {
   id: ID!
-  name: String!
-  email: String!
-  password: String!
-  resetToken: String
-  resetTokenExpiry: Float
-  permission: [Permission!]!
+  tag: String
 }
 
-input UserScalarWhereInput {
+input tagsScalarWhereInput {
   """Logical AND on all given filters."""
-  AND: [UserScalarWhereInput!]
+  AND: [tagsScalarWhereInput!]
 
   """Logical OR on all given filters."""
-  OR: [UserScalarWhereInput!]
+  OR: [tagsScalarWhereInput!]
 
   """Logical NOT on all given filters combined by AND."""
-  NOT: [UserScalarWhereInput!]
+  NOT: [tagsScalarWhereInput!]
   id: ID
 
   """All values that are not equal to given value."""
@@ -1212,188 +1388,317 @@ input UserScalarWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
-  name: String
+  tag: String
 
   """All values that are not equal to given value."""
-  name_not: String
+  tag_not: String
 
   """All values that are contained in given list."""
-  name_in: [String!]
+  tag_in: [String!]
 
   """All values that are not contained in given list."""
-  name_not_in: [String!]
+  tag_not_in: [String!]
 
   """All values less than the given value."""
-  name_lt: String
+  tag_lt: String
 
   """All values less than or equal the given value."""
-  name_lte: String
+  tag_lte: String
 
   """All values greater than the given value."""
-  name_gt: String
+  tag_gt: String
 
   """All values greater than or equal the given value."""
-  name_gte: String
+  tag_gte: String
 
   """All values containing the given string."""
-  name_contains: String
+  tag_contains: String
 
   """All values not containing the given string."""
-  name_not_contains: String
+  tag_not_contains: String
 
   """All values starting with the given string."""
-  name_starts_with: String
+  tag_starts_with: String
 
   """All values not starting with the given string."""
-  name_not_starts_with: String
+  tag_not_starts_with: String
 
   """All values ending with the given string."""
-  name_ends_with: String
+  tag_ends_with: String
 
   """All values not ending with the given string."""
-  name_not_ends_with: String
-  email: String
+  tag_not_ends_with: String
+}
+
+type tagsSubscriptionPayload {
+  mutation: MutationType!
+  node: tags
+  updatedFields: [String!]
+  previousValues: tagsPreviousValues
+}
+
+input tagsSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [tagsSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [tagsSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [tagsSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: tagsWhereInput
+}
+
+input tagsUpdateDataInput {
+  tag: String
+}
+
+input tagsUpdateInput {
+  tag: String
+}
+
+input tagsUpdateManyDataInput {
+  tag: String
+}
+
+input tagsUpdateManyInput {
+  create: [tagsCreateInput!]
+  connect: [tagsWhereUniqueInput!]
+  set: [tagsWhereUniqueInput!]
+  disconnect: [tagsWhereUniqueInput!]
+  delete: [tagsWhereUniqueInput!]
+  update: [tagsUpdateWithWhereUniqueNestedInput!]
+  updateMany: [tagsUpdateManyWithWhereNestedInput!]
+  deleteMany: [tagsScalarWhereInput!]
+  upsert: [tagsUpsertWithWhereUniqueNestedInput!]
+}
+
+input tagsUpdateManyMutationInput {
+  tag: String
+}
+
+input tagsUpdateManyWithWhereNestedInput {
+  where: tagsScalarWhereInput!
+  data: tagsUpdateManyDataInput!
+}
+
+input tagsUpdateWithWhereUniqueNestedInput {
+  where: tagsWhereUniqueInput!
+  data: tagsUpdateDataInput!
+}
+
+input tagsUpsertWithWhereUniqueNestedInput {
+  where: tagsWhereUniqueInput!
+  update: tagsUpdateDataInput!
+  create: tagsCreateInput!
+}
+
+input tagsWhereInput {
+  """Logical AND on all given filters."""
+  AND: [tagsWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [tagsWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [tagsWhereInput!]
+  id: ID
 
   """All values that are not equal to given value."""
-  email_not: String
+  id_not: ID
 
   """All values that are contained in given list."""
-  email_in: [String!]
+  id_in: [ID!]
 
   """All values that are not contained in given list."""
-  email_not_in: [String!]
+  id_not_in: [ID!]
 
   """All values less than the given value."""
-  email_lt: String
+  id_lt: ID
 
   """All values less than or equal the given value."""
-  email_lte: String
+  id_lte: ID
 
   """All values greater than the given value."""
-  email_gt: String
+  id_gt: ID
 
   """All values greater than or equal the given value."""
-  email_gte: String
+  id_gte: ID
 
   """All values containing the given string."""
-  email_contains: String
+  id_contains: ID
 
   """All values not containing the given string."""
-  email_not_contains: String
+  id_not_contains: ID
 
   """All values starting with the given string."""
-  email_starts_with: String
+  id_starts_with: ID
 
   """All values not starting with the given string."""
-  email_not_starts_with: String
+  id_not_starts_with: ID
 
   """All values ending with the given string."""
-  email_ends_with: String
+  id_ends_with: ID
 
   """All values not ending with the given string."""
-  email_not_ends_with: String
-  password: String
+  id_not_ends_with: ID
+  tag: String
 
   """All values that are not equal to given value."""
-  password_not: String
+  tag_not: String
 
   """All values that are contained in given list."""
-  password_in: [String!]
+  tag_in: [String!]
 
   """All values that are not contained in given list."""
-  password_not_in: [String!]
+  tag_not_in: [String!]
 
   """All values less than the given value."""
-  password_lt: String
+  tag_lt: String
 
   """All values less than or equal the given value."""
-  password_lte: String
+  tag_lte: String
 
   """All values greater than the given value."""
-  password_gt: String
+  tag_gt: String
 
   """All values greater than or equal the given value."""
-  password_gte: String
+  tag_gte: String
 
   """All values containing the given string."""
-  password_contains: String
+  tag_contains: String
 
   """All values not containing the given string."""
-  password_not_contains: String
+  tag_not_contains: String
 
   """All values starting with the given string."""
-  password_starts_with: String
+  tag_starts_with: String
 
   """All values not starting with the given string."""
-  password_not_starts_with: String
+  tag_not_starts_with: String
 
   """All values ending with the given string."""
-  password_ends_with: String
+  tag_ends_with: String
 
   """All values not ending with the given string."""
-  password_not_ends_with: String
+  tag_not_ends_with: String
+}
+
+input tagsWhereUniqueInput {
+  id: ID
+}
+
+type User implements Node {
+  id: ID!
+  name: String!
+  email: String!
+  password: String!
   resetToken: String
-
-  """All values that are not equal to given value."""
-  resetToken_not: String
-
-  """All values that are contained in given list."""
-  resetToken_in: [String!]
-
-  """All values that are not contained in given list."""
-  resetToken_not_in: [String!]
-
-  """All values less than the given value."""
-  resetToken_lt: String
-
-  """All values less than or equal the given value."""
-  resetToken_lte: String
-
-  """All values greater than the given value."""
-  resetToken_gt: String
-
-  """All values greater than or equal the given value."""
-  resetToken_gte: String
-
-  """All values containing the given string."""
-  resetToken_contains: String
-
-  """All values not containing the given string."""
-  resetToken_not_contains: String
-
-  """All values starting with the given string."""
-  resetToken_starts_with: String
-
-  """All values not starting with the given string."""
-  resetToken_not_starts_with: String
-
-  """All values ending with the given string."""
-  resetToken_ends_with: String
-
-  """All values not ending with the given string."""
-  resetToken_not_ends_with: String
   resetTokenExpiry: Float
+  permission: [Permission!]!
+  articles(where: ArticleWhereInput, orderBy: ArticleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Article!]
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
 
-  """All values that are not equal to given value."""
-  resetTokenExpiry_not: Float
+"""A connection to a list of items."""
+type UserConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
 
-  """All values that are contained in given list."""
-  resetTokenExpiry_in: [Float!]
+  """A list of edges."""
+  edges: [UserEdge]!
+  aggregate: AggregateUser!
+}
 
-  """All values that are not contained in given list."""
-  resetTokenExpiry_not_in: [Float!]
+input UserCreateInput {
+  id: ID
+  name: String!
+  email: String!
+  password: String!
+  resetToken: String
+  resetTokenExpiry: Float
+  permission: UserCreatepermissionInput
+  articles: ArticleCreateManyWithoutAuthorInput
+}
 
-  """All values less than the given value."""
-  resetTokenExpiry_lt: Float
+input UserCreateOneWithoutArticlesInput {
+  create: UserCreateWithoutArticlesInput
+  connect: UserWhereUniqueInput
+}
 
-  """All values less than or equal the given value."""
-  resetTokenExpiry_lte: Float
+input UserCreatepermissionInput {
+  set: [Permission!]
+}
 
-  """All values greater than the given value."""
-  resetTokenExpiry_gt: Float
+input UserCreateWithoutArticlesInput {
+  id: ID
+  name: String!
+  email: String!
+  password: String!
+  resetToken: String
+  resetTokenExpiry: Float
+  permission: UserCreatepermissionInput
+}
 
-  """All values greater than or equal the given value."""
-  resetTokenExpiry_gte: Float
+"""An edge in a connection."""
+type UserEdge {
+  """The item at the end of the edge."""
+  node: User!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum UserOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  email_ASC
+  email_DESC
+  password_ASC
+  password_DESC
+  resetToken_ASC
+  resetToken_DESC
+  resetTokenExpiry_ASC
+  resetTokenExpiry_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type UserPreviousValues {
+  id: ID!
+  name: String!
+  email: String!
+  password: String!
+  resetToken: String
+  resetTokenExpiry: Float
+  permission: [Permission!]!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type UserSubscriptionPayload {
@@ -1445,15 +1750,6 @@ input UserUpdateInput {
   articles: ArticleUpdateManyWithoutAuthorInput
 }
 
-input UserUpdateManyDataInput {
-  name: String
-  email: String
-  password: String
-  resetToken: String
-  resetTokenExpiry: Float
-  permission: UserUpdatepermissionInput
-}
-
 input UserUpdateManyMutationInput {
   name: String
   email: String
@@ -1463,21 +1759,13 @@ input UserUpdateManyMutationInput {
   permission: UserUpdatepermissionInput
 }
 
-input UserUpdateManyWithoutArticlesInput {
-  create: [UserCreateWithoutArticlesInput!]
-  connect: [UserWhereUniqueInput!]
-  set: [UserWhereUniqueInput!]
-  disconnect: [UserWhereUniqueInput!]
-  delete: [UserWhereUniqueInput!]
-  update: [UserUpdateWithWhereUniqueWithoutArticlesInput!]
-  updateMany: [UserUpdateManyWithWhereNestedInput!]
-  deleteMany: [UserScalarWhereInput!]
-  upsert: [UserUpsertWithWhereUniqueWithoutArticlesInput!]
-}
-
-input UserUpdateManyWithWhereNestedInput {
-  where: UserScalarWhereInput!
-  data: UserUpdateManyDataInput!
+input UserUpdateOneWithoutArticlesInput {
+  create: UserCreateWithoutArticlesInput
+  connect: UserWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: UserUpdateWithoutArticlesDataInput
+  upsert: UserUpsertWithoutArticlesInput
 }
 
 input UserUpdatepermissionInput {
@@ -1493,13 +1781,7 @@ input UserUpdateWithoutArticlesDataInput {
   permission: UserUpdatepermissionInput
 }
 
-input UserUpdateWithWhereUniqueWithoutArticlesInput {
-  where: UserWhereUniqueInput!
-  data: UserUpdateWithoutArticlesDataInput!
-}
-
-input UserUpsertWithWhereUniqueWithoutArticlesInput {
-  where: UserWhereUniqueInput!
+input UserUpsertWithoutArticlesInput {
   update: UserUpdateWithoutArticlesDataInput!
   create: UserCreateWithoutArticlesInput!
 }
@@ -1735,6 +2017,50 @@ input UserWhereInput {
 
   """All values greater than or equal the given value."""
   resetTokenExpiry_gte: Float
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
   articles_every: ArticleWhereInput
   articles_some: ArticleWhereInput
   articles_none: ArticleWhereInput

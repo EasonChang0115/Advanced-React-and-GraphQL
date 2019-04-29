@@ -13,18 +13,19 @@ import TagBar from '../markdown/TagBar';
 import MdEditor from '../markdown/MdEditor';
 import Loading from '../Loading';
 import SavaButtons from './SavaButtons';
+import UploadImage from '../UploadImage';
 
 const CREATE_ARTICLE_MUTATION = gql`
   mutation CREATE_ARTICLE_MUTATION(
     $title: String
     $content: String
-    $createAt: String!
+    $createdAt: String!
     $image: String
   ) {
     createArticle(
       title: $title
       content: $content
-      createAt: $createAt
+      createdAt: $createdAt
       image: $image
     ) {
       id
@@ -44,6 +45,11 @@ class CreateArticle extends Component {
     content: '',
     image: '',
     tags: ['javascript']
+  }
+  handleImageChange = url => {
+    this.setState({
+      image: url
+    });
   }
   handleTitleChange = e => {
     this.setState({
@@ -75,7 +81,7 @@ class CreateArticle extends Component {
           title: this.state.title,
           content: this.state.content,
           image: this.state.image,
-          createAt: moment().format()
+          createdAt: moment().format()
         }}
         refetchQueries={
           [{query: ALL_ARTICLES_QUERY},{query: PAGINATION_ARTICLE_QUERY}]
@@ -85,8 +91,9 @@ class CreateArticle extends Component {
          (createArticle, { loading, error }) => {
             return (
               <>
+                <UploadImage imageUrl={this.state.image} setImageUrlFunc={this.handleImageChange} />
                 <CreateArticleStyles>
-                  <Error error={error} />
+                  <Error error={error} />  
                   <Title placeholder="在這裡幫文章下個好標題..." title={this.state.title} titleChangeFunc={this.handleTitleChange}/>
                   <MdEditor value={this.state.content} 
                     onChange={(value) => { this.setState({
