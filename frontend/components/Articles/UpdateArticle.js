@@ -10,6 +10,7 @@ import TagBar from '../markdown/TagBar';
 import MdEditor from '../markdown/MdEditor';
 import Loading from '../Loading';
 import SavaButtons from './SavaButtons';
+import UploadImage from '../UploadImage';
 
 const SINGLE_ARTICLE_QUERY = gql`
   query SINGLE_ARTICLE_QUERY($id: ID!) {
@@ -121,7 +122,7 @@ class UpdateArticleMutation extends Component {
                 <SavaButtons 
                   articleID={this.props.article.id} 
                   disabled={loading} 
-                  saveFunc={async () => {
+                  saveArticleFunc={async () => {
                     const res = await updateArticle();
                     Router.push({
                       pathname: '/',

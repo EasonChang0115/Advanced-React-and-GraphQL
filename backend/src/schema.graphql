@@ -15,7 +15,7 @@ type Mutation {
   updateItem(id: ID!, title: String, description: String, price: Int): Item!
   deleteItem(id: ID!): Item
 
-  createArticle(title: String, content: String, image: String, createAt: String): Article!
+  createArticle(title: String, content: String, image: String, createdAt: String): Article!
   updateArticle(id: ID!, title: String, content: String, image: String): Article!
   deleteArticle(id: ID!): Article
 

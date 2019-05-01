@@ -9,10 +9,6 @@ enum Permission {
   PERMISSIONUPDATE
 }
 
-type Category {
-  id: ID! @id
-}
-
 type tags {
   id: ID! @id
   tag: String
@@ -22,7 +18,6 @@ type Article {
   id: ID! @id
   author: User
   title: String
-  category: Category
   image: String
   content: String
   tags: [tags]

@@ -26,18 +26,18 @@ const UploadImageStyle = styled.div`
 
 class UploadImage extends Component {
   uploadFile = async e => {
-    // const files = e.target.files;
-    // if (files.length === 0) return;
-    // const data = new FormData();
-    // data.append('file', files[0]);
-    // data.append('upload_preset', 'Litfits');
-    // const res = await fetch('https://api.cloudinary.com/v1_1/dpy8roliv/image/upload', {
-    //   method: 'POST',
-    //   body: data
-    // });
-    // const file = await res.json();
-    // this.props.setImageUrlFunc(file.secure_url);
-    this.props.setImageUrlFunc('https://upload.wikimedia.org/wikipedia/commons/6/6a/JavaScript-logo.png');
+    const files = e.target.files;
+    if (files.length === 0) return;
+    const data = new FormData();
+    data.append('file', files[0]);
+    data.append('upload_preset', 'Litfits');
+    const res = await fetch('https://api.cloudinary.com/v1_1/dpy8roliv/image/upload', {
+      method: 'POST',
+      body: data
+    });
+    const file = await res.json();
+    this.props.setImageUrlFunc(file.secure_url);
+    // this.props.setImageUrlFunc('https://upload.wikimedia.org/wikipedia/commons/6/6a/JavaScript-logo.png');
   }
   render() {
     let { imageUrl } = this.props;

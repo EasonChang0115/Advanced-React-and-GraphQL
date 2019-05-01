@@ -19,7 +19,6 @@ const CREATE_ARTICLE_MUTATION = gql`
   mutation CREATE_ARTICLE_MUTATION(
     $title: String
     $content: String
-    $createdAt: String!
     $image: String
   ) {
     createArticle(

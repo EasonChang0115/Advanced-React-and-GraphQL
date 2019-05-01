@@ -16,7 +16,7 @@ const Query = {
         title
         content
         image
-        createAt
+        createdAt
         author {
           id
           name
@@ -26,8 +26,8 @@ const Query = {
     if (!nowArticle) {
       throw new Error(`No such article found for ID ${args.id}`);
     }
-    let nextArticle = await ctx.db.query.articles({ where: {createAt_gt: nowArticle.createAt}, first: 1 });
-    let prevArticle = await ctx.db.query.articles({ where: {createAt_lt: nowArticle.createAt}, last: 1 });
+    let nextArticle = await ctx.db.query.articles({ where: {createdAt_gt: nowArticle.createdAt}, first: 1 });
+    let prevArticle = await ctx.db.query.articles({ where: {createdAt_lt: nowArticle.createdAt}, last: 1 });
     return {
       preArticle: prevArticle[0],
       nowArticle: nowArticle,

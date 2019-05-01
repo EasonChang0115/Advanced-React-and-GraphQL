@@ -1,11 +1,7 @@
 # source: https://us1.prisma.sh/eason-c56c5d/jaaaaason-fits/dev
-# timestamp: Mon Apr 29 2019 21:39:58 GMT+0800 (GMT+08:00)
+# timestamp: Wed May 01 2019 22:26:42 GMT+0800 (GMT+08:00)
 
 type AggregateArticle {
-  count: Int!
-}
-
-type AggregateCategory {
   count: Int!
 }
 
@@ -25,7 +21,6 @@ type Article implements Node {
   id: ID!
   author: User
   title: String
-  category: Category
   image: String
   content: String
   tags(where: tagsWhereInput, orderBy: tagsOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [tags!]
@@ -49,7 +44,6 @@ input ArticleCreateInput {
   image: String
   content: String
   author: UserCreateOneWithoutArticlesInput
-  category: CategoryCreateOneInput
   tags: tagsCreateManyInput
 }
 
@@ -63,7 +57,6 @@ input ArticleCreateWithoutAuthorInput {
   title: String
   image: String
   content: String
-  category: CategoryCreateOneInput
   tags: tagsCreateManyInput
 }
 
@@ -359,7 +352,6 @@ input ArticleUpdateInput {
   image: String
   content: String
   author: UserUpdateOneWithoutArticlesInput
-  category: CategoryUpdateOneInput
   tags: tagsUpdateManyInput
 }
 
@@ -396,7 +388,6 @@ input ArticleUpdateWithoutAuthorDataInput {
   title: String
   image: String
   content: String
-  category: CategoryUpdateOneInput
   tags: tagsUpdateManyInput
 }
 
@@ -625,7 +616,6 @@ input ArticleWhereInput {
   """All values greater than or equal the given value."""
   updatedAt_gte: DateTime
   author: UserWhereInput
-  category: CategoryWhereInput
   tags_every: tagsWhereInput
   tags_some: tagsWhereInput
   tags_none: tagsWhereInput
@@ -638,148 +628,6 @@ input ArticleWhereUniqueInput {
 type BatchPayload {
   """The number of nodes that have been affected by the Batch operation."""
   count: Long!
-}
-
-type Category implements Node {
-  id: ID!
-}
-
-"""A connection to a list of items."""
-type CategoryConnection {
-  """Information to aid in pagination."""
-  pageInfo: PageInfo!
-
-  """A list of edges."""
-  edges: [CategoryEdge]!
-  aggregate: AggregateCategory!
-}
-
-input CategoryCreateInput {
-  id: ID
-}
-
-input CategoryCreateOneInput {
-  create: CategoryCreateInput
-  connect: CategoryWhereUniqueInput
-}
-
-"""An edge in a connection."""
-type CategoryEdge {
-  """The item at the end of the edge."""
-  node: Category!
-
-  """A cursor for use in pagination."""
-  cursor: String!
-}
-
-enum CategoryOrderByInput {
-  id_ASC
-  id_DESC
-}
-
-type CategoryPreviousValues {
-  id: ID!
-}
-
-type CategorySubscriptionPayload {
-  mutation: MutationType!
-  node: Category
-  updatedFields: [String!]
-  previousValues: CategoryPreviousValues
-}
-
-input CategorySubscriptionWhereInput {
-  """Logical AND on all given filters."""
-  AND: [CategorySubscriptionWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [CategorySubscriptionWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [CategorySubscriptionWhereInput!]
-
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
-  mutation_in: [MutationType!]
-
-  """
-  The subscription event gets only dispatched when one of the updated fields names is included in this list
-  """
-  updatedFields_contains: String
-
-  """
-  The subscription event gets only dispatched when all of the field names included in this list have been updated
-  """
-  updatedFields_contains_every: [String!]
-
-  """
-  The subscription event gets only dispatched when some of the field names included in this list have been updated
-  """
-  updatedFields_contains_some: [String!]
-  node: CategoryWhereInput
-}
-
-input CategoryUpdateOneInput {
-  create: CategoryCreateInput
-  connect: CategoryWhereUniqueInput
-  disconnect: Boolean
-  delete: Boolean
-}
-
-input CategoryWhereInput {
-  """Logical AND on all given filters."""
-  AND: [CategoryWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [CategoryWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [CategoryWhereInput!]
-  id: ID
-
-  """All values that are not equal to given value."""
-  id_not: ID
-
-  """All values that are contained in given list."""
-  id_in: [ID!]
-
-  """All values that are not contained in given list."""
-  id_not_in: [ID!]
-
-  """All values less than the given value."""
-  id_lt: ID
-
-  """All values less than or equal the given value."""
-  id_lte: ID
-
-  """All values greater than the given value."""
-  id_gt: ID
-
-  """All values greater than or equal the given value."""
-  id_gte: ID
-
-  """All values containing the given string."""
-  id_contains: ID
-
-  """All values not containing the given string."""
-  id_not_contains: ID
-
-  """All values starting with the given string."""
-  id_starts_with: ID
-
-  """All values not starting with the given string."""
-  id_not_starts_with: ID
-
-  """All values ending with the given string."""
-  id_ends_with: ID
-
-  """All values not ending with the given string."""
-  id_not_ends_with: ID
-}
-
-input CategoryWhereUniqueInput {
-  id: ID
 }
 
 scalar DateTime
@@ -1200,7 +1048,6 @@ type Mutation {
   createUser(data: UserCreateInput!): User!
   createItem(data: ItemCreateInput!): Item!
   createtags(data: tagsCreateInput!): tags!
-  createCategory(data: CategoryCreateInput!): Category!
   updateArticle(data: ArticleUpdateInput!, where: ArticleWhereUniqueInput!): Article
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateItem(data: ItemUpdateInput!, where: ItemWhereUniqueInput!): Item
@@ -1209,7 +1056,6 @@ type Mutation {
   deleteUser(where: UserWhereUniqueInput!): User
   deleteItem(where: ItemWhereUniqueInput!): Item
   deletetags(where: tagsWhereUniqueInput!): tags
-  deleteCategory(where: CategoryWhereUniqueInput!): Category
   upsertArticle(where: ArticleWhereUniqueInput!, create: ArticleCreateInput!, update: ArticleUpdateInput!): Article!
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   upsertItem(where: ItemWhereUniqueInput!, create: ItemCreateInput!, update: ItemUpdateInput!): Item!
@@ -1222,7 +1068,6 @@ type Mutation {
   deleteManyUsers(where: UserWhereInput): BatchPayload!
   deleteManyItems(where: ItemWhereInput): BatchPayload!
   deleteManyTagses(where: tagsWhereInput): BatchPayload!
-  deleteManyCategories(where: CategoryWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -1266,17 +1111,14 @@ type Query {
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   items(where: ItemWhereInput, orderBy: ItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Item]!
   tagses(where: tagsWhereInput, orderBy: tagsOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [tags]!
-  categories(where: CategoryWhereInput, orderBy: CategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Category]!
   article(where: ArticleWhereUniqueInput!): Article
   user(where: UserWhereUniqueInput!): User
   item(where: ItemWhereUniqueInput!): Item
   tags(where: tagsWhereUniqueInput!): tags
-  category(where: CategoryWhereUniqueInput!): Category
   articlesConnection(where: ArticleWhereInput, orderBy: ArticleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ArticleConnection!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
   itemsConnection(where: ItemWhereInput, orderBy: ItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ItemConnection!
   tagsesConnection(where: tagsWhereInput, orderBy: tagsOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): tagsConnection!
-  categoriesConnection(where: CategoryWhereInput, orderBy: CategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CategoryConnection!
 
   """Fetches an object given its ID"""
   node(
@@ -1290,7 +1132,6 @@ type Subscription {
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
   item(where: ItemSubscriptionWhereInput): ItemSubscriptionPayload
   tags(where: tagsSubscriptionWhereInput): tagsSubscriptionPayload
-  category(where: CategorySubscriptionWhereInput): CategorySubscriptionPayload
 }
 
 type tags implements Node {

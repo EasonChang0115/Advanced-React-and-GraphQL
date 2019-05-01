@@ -103,7 +103,7 @@ class SingleArticle extends Component {
             if (!data.pageArticles) return <p>No item found for { this.props.id }</p>
             const article = data.pageArticles.nowArticle;
             let editBlock = null;
-            if (this.state.userId && this.state.userId === article.author[0].id) {
+            if (this.state.userId && this.state.userId === article.author.id) {
               editBlock = <Link href={{
                   pathname: '/article',
                   query: { id: article.id }
